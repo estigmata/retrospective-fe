@@ -9,8 +9,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import 'hammerjs';
 
-import { MaterialModule } from './materia.module';
-import { GridComponent } from './example/grid.component';
+import { MaterialModule } from './material.module';
+import { NavBarComponent } from './navbar/navbar.component';
+import { SideNavComponent } from './sidenav/sidenav.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -19,7 +20,8 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    GridComponent
+    NavBarComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,

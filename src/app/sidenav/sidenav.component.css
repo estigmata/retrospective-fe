@@ -1,0 +1,9 @@
+.my-sidenav {
+  border-right: 1px solid #ccc;
+  height: 100%;
+  width: 100%;
+}
+
+md-sidenav {
+ max-width: 200px;
+}
