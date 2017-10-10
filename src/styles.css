@@ -5,3 +5,58 @@ body {
   margin: 0;
   padding: 0;
 }
+
+ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+.retrospective-list {
+  list-style: none;
+}
+
+.retrospective-list a {
+  background-color: #eee;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 11px;
+  margin-top: 10px;
+  padding: 10px;
+  text-decoration: none;
+  width: 15em;
+}
+
+.retrospective-list a:visited,
+.retrospective-list a:link {
+  color: #607D8B;
+}
+
+.retrospective-list a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+
+.retrospective-list a.active {
+  color: #039be5;
+}
+
+.wrapper {
+  min-height: 500px;
+}
+
+.container {
+  padding: 20px;
+}
+
+.my-sidenav {
+  min-width: 17vw !important;
+  padding: 20px 10px;
+}
+
+.space {
+  flex: 1 1 auto;
+}
+
+.block {
+  display: block;
+}

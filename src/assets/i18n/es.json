@@ -1,5 +1,23 @@
 {
-  "APP": {
-    "TITLE": "Bienvenido a"
+  "APP-COMPONENT" :
+  {
+    "TITTLE": "Retrospectivas - espacio de trabajo"
+  },
+  "LANGUAGE" :
+  {
+    "ES": "Español",
+    "EN": "Ingles"
+  },
+  "ITEM" :
+  {
+    "TEXTAREA-PLACEHOLDER": "Escribe tu comentario"
+  },
+  "DELETE" :
+  {
+    "MESSAGE" : "Deseas eliminar el elemento"
+  },
+  "VOTE-COMPONENT":
+  {
+    "VOTES-LABEL" : "Votos restantes"
   }
 }

@@ -1,0 +1,5 @@
+<div fxLayout="row" fxLayout.xs="column" *ngIf="retrospective">
+  <div class="block" fxFlex *ngFor="let category of categories">
+    <app-category [category]="category" [retrospectiveId]="retrospective._id"></app-category>
+  </div>
+</div>

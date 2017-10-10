@@ -1,3 +1,28 @@
-<app-navbar>
-  Loading Material Docs example...
-</app-navbar>
+<md-toolbar class="my-toolbar" color="primary">
+  <button type="button" md-button (click)="sidenav.toggle()">
+    <md-icon>menu</md-icon>
+  </button>
+  {{ 'APP-COMPONENT.TITTLE' | translate }}
+  <span class="space"></span>
+  <button layout="row" layout-align="end-start" md-button [mdMenuTriggerFor]="menu">
+    <md-icon>language</md-icon>
+    <md-icon>arrow_drop_down</md-icon>
+  </button>
+  <md-menu #menu="mdMenu">
+    <button md-menu-item (click)="switchLanguage('en')">
+      {{ 'LANGUAGE.EN' | translate }}
+    </button>
+    <button md-menu-item (click)="switchLanguage('es')">
+      {{ 'LANGUAGE.ES' | translate }}
+    </button>
+  </md-menu>
+</md-toolbar>
+<md-sidenav-container class="wrapper">
+  <md-sidenav #sidenav class="my-sidenav">
+    Empty Side
+  </md-sidenav>
+  <div class="container">
+    <app-retrospective-list></app-retrospective-list>
+  </div>
+  <router-outlet></router-outlet>
+</md-sidenav-container>

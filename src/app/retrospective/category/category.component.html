@@ -1,0 +1,15 @@
+<md-card>
+  <md-card-header>
+    <md-card-title><h4>{{category.name}}</h4></md-card-title>
+  </md-card-header>
+  <md-card-actions align="end">
+    <a md-icon-button color="primary" (click)="addItem()">
+      <md-icon class="md-18">add_circle</md-icon>
+    </a>
+  </md-card-actions>
+  <md-card-content>
+    <div *ngFor= "let item of items; let i = index">
+      <app-item [item]="item" (modified)="onItemModified($event)" (deleted)="onItemDeleted(i)"></app-item>
+    </div>  
+  </md-card-content>
+</md-card>

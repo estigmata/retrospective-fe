@@ -1,17 +1,23 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DomSanitizer } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MdButtonModule,
+  MdIconModule,
+  MdSidenavModule,
+  MdToolbarModule,
+  MdMenuModule
+} from '@angular/material';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import 'hammerjs';
-
-import { MaterialModule } from './material.module';
-import { NavBarComponent } from './navbar/navbar.component';
-import { SideNavComponent } from './sidenav/sidenav.component';
+import { RetrospectiveListModule } from './retrospective-list/retrospective-list.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -19,15 +25,21 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavBarComponent,
-    SideNavComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    FlexLayoutModule,
     AppRoutingModule,
+    MdButtonModule,
+    MdIconModule,
+    MdMenuModule,
+    MdSidenavModule,
+    MdToolbarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -36,6 +48,7 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    RetrospectiveListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,12 @@
+<h1 md-dialog-title> {{ 'DELETE.MESSAGE' | translate }}</h1>
+<div md-dialog-content>
+    {{data.title}}?
+</div>
+<div md-dialog-actions align="end">
+  <button md-icon-button (click)="onNoClick()" color="warn">
+    <md-icon class="md-18">cancel</md-icon>
+  </button>
+  <button md-icon-button [md-dialog-close]="" (click)="onYesClick()" color="primary">
+    <md-icon class="md-18">check_circle</md-icon>
+  </button>
+</div>

@@ -1,5 +1,23 @@
 {
-  "APP": {
-    "TITLE": "Welcome to"
+  "APP-COMPONENT" :
+  {
+    "TITTLE": "Retrospectives - Workshop"
+  },
+  "LANGUAGE" :
+  {
+    "ES": "Spanish",
+    "EN": "English"
+  },
+  "ITEM" :
+  {
+    "TEXTAREA-PLACEHOLDER": "Write your comment"
+  },
+  "DELETE" :
+  {
+    "MESSAGE" : "Do you want delete the item"
+  },
+  "VOTE-COMPONENT":
+  {
+    "VOTES-LABEL" : "Votes remaining"
   }
 }

@@ -6,7 +6,7 @@ WORKDIR /app/project
 
 COPY . /app/project
 
-RUN npm run build
+RUN npm run build-prod
 
 RUN npm --proxy http://172.31.90.162:8080 install
 
