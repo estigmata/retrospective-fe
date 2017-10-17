@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdCardModule, MdIconModule, MdInputModule, MdButtonModule, MdDialogModule } from '@angular/material';
+import { MdCardModule, MdIconModule, MdInputModule, MdButtonModule, MdDialogModule, MdToolbarModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { ItemService } from './services/item.service';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { VoteItemComponent } from './vote-item/vote-item.component';
 import { RetrospectiveResolverService } from './retrospective-resolver.service';
+import { ActionItemComponent } from './action-item/action-item.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { RetrospectiveResolverService } from './retrospective-resolver.service';
     ItemComponent,
     CategoryComponent,
     ConfirmDialogComponent,
-    VoteItemComponent
+    VoteItemComponent,
+    ActionItemComponent
   ],
   imports: [
     RetrospectiveRoutingModule,
@@ -41,7 +43,8 @@ import { RetrospectiveResolverService } from './retrospective-resolver.service';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    MdDialogModule
+    MdDialogModule,
+    MdToolbarModule
   ],
   providers: [
     RetrospectiveService,
@@ -51,7 +54,8 @@ import { RetrospectiveResolverService } from './retrospective-resolver.service';
   exports: [
     RetrospectiveComponent,
     ItemComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ActionItemComponent
   ],
   entryComponents: [ConfirmDialogComponent]
 })

@@ -10,7 +10,13 @@
   },
   "ITEM" :
   {
-    "TEXTAREA-PLACEHOLDER": "Write your comment"
+    "TEXTAREA-PLACEHOLDER": "Write your comment",
+    "CATEGORY": "Category:",
+    "VOTES": "Votes:"
+  },
+  "ACTION-ITEM" :
+  {
+    "TEXTAREA-PLACEHOLDER": "Write the action item"
   },
   "DELETE" :
   {
@@ -19,5 +25,10 @@
   "VOTE-COMPONENT":
   {
     "VOTES-LABEL" : "Votes remaining"
+  },
+  "CREATE-RETROSPECTIVE":
+  {
+    "LAUNCH-LABEL" : "LAUNCH NEW RETROSPECTIVE",
+    "SELECT-STRATEGY" : "Strategy"
   }
 }

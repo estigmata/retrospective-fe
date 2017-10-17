@@ -66,4 +66,17 @@ export class ItemService {
         }
       );
   }
+
+  vote (itemId: String, isIncrement): Observable<Item> {
+    const userId = 1;
+    return this.http.put<ItemWrapper>(`${environment.backendPath}items/${itemId}/rates/${userId}`, isIncrement)
+    .map (
+      (itemUpdated: ItemWrapper) => {
+        return itemUpdated.data;
+      },
+      (error) => {
+        this.handleError(error);
+      }
+    );
+  }
 }

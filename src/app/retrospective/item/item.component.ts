@@ -14,6 +14,8 @@ export class ItemComponent implements OnInit {
   @Input() item: Item;
   @Output() modified = new EventEmitter<Item>();
   @Output() deleted = new EventEmitter<void>();
+  @Output() vote = new EventEmitter<boolean>();
+  @Input() state;
   public editMode;
   public itemForm: FormGroup;
   constructor(
@@ -22,11 +24,12 @@ export class ItemComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       'summary': [null, Validators.required]
     });
-    
+
    }
 
   ngOnInit() {
    this.editMode = !this.item._id;
+   this.item.rate = 0;
   }
 
   save(newItemValue) {
@@ -54,6 +57,16 @@ export class ItemComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       'summary': [this.item.summary, Validators.required]
     });
+  }
+
+  addRate() {
+    this.vote.emit(true);
+  }
+
+  removeRate() {
+    if (this.item.rate > 0) {
+      this.vote.emit(false);
+    }
   }
 
 }

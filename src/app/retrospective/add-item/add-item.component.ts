@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -10,6 +10,7 @@ import { ItemService } from './../services/item.service';
 import { Retrospective } from '../models/retrospective.model';
 import { Item } from '../models/item.model';
 import { Category } from './../models/category.model';
+import { State } from './../models/state.model';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
 
   public retrospective: Retrospective;
   public categories: Category[];
+  public state = new State ({ edit: true });
 
   constructor(
     private retrospectiveService: RetrospectiveService,
@@ -60,5 +62,5 @@ export class AddItemComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-}
+  }
 }

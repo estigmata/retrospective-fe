@@ -5,6 +5,10 @@ const routes: Routes = [
   {
     path: 'retrospective/:id',
     loadChildren: 'app/retrospective/retrospective.module#RetrospectiveModule'
+  },
+  {
+    path: 'team',
+    loadChildren: 'app/team-retrospective/team-retrospective.module#TeamRetrospectiveModule'
   }
 ];
 

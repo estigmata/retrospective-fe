@@ -1,0 +1,33 @@
+<div class="container">
+  <h2>{{ projectName }}</h2>
+  <h3>{{ teamName }}</h3>
+  <form [formGroup]="createRetrospectiveForm" (ngSubmit)="save(createRetrospectiveForm.value)">
+    <md-card>
+        <md-card-header>
+          <md-card-title>
+            <span class="text-holder">
+                {{ 'CREATE-RETROSPECTIVE.LAUNCH-LABEL' | translate }}
+            </span>
+            <md-select placeholder="{{ 'CREATE-RETROSPECTIVE.SELECT-STRATEGY' | translate }}" formControlName= "strategies" class= "strategy-select">
+              <md-option *ngFor="let strategy of strategyTemplates" [value]="strategy._id">
+                  {{ strategy.name }}
+              </md-option>
+            </md-select>
+          </md-card-title>
+        </md-card-header>
+        <md-card-content>
+          <md-form-field class="full-width">
+              <input mdInput placeholder="" value="{{teamName}}-{{projectName}}-{{newRetrospectiveNumber}}" formControlName= "name">
+          </md-form-field>
+          <button md-icon-button type="submit" color="primary">
+              <md-icon class="md-18">forward</md-icon>
+          </button>
+        </md-card-content>
+        <md-card-footer>
+          <app-retrospective-list></app-retrospective-list>
+        </md-card-footer>
+    </md-card>
+  </form>
+</div>
+
+

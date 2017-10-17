@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { Item } from '../models/item.model';
 import { ItemService } from '../services/item.service';
+import { RateObject } from './../models/rate-object.model';
 
 @Component({
   selector: 'app-category',
@@ -10,6 +11,8 @@ import { ItemService } from '../services/item.service';
 export class CategoryComponent implements OnInit {
   @Input() category;
   @Input() retrospectiveId;
+  @Input () state;
+  @Output() vote = new EventEmitter<Object>();
   public items: Item[] = [];
   constructor (private itemService: ItemService) {}
 
@@ -59,5 +62,10 @@ export class CategoryComponent implements OnInit {
         }
       );
     }
+  }
+
+  voteItem(isIncrement, index) {
+    const rateObject = new RateObject({ isIncrement: isIncrement, item: this.items[index] });
+    this.vote.emit(rateObject);
   }
 }

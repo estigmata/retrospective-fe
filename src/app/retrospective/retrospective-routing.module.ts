@@ -20,7 +20,8 @@ const routes: Routes = [
       },
       {
         path: 'vote-items',
-        component: VoteItemComponent
+        component: VoteItemComponent,
+        pathMatch: 'full'
       }
     ]
   }

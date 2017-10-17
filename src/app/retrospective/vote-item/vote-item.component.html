@@ -1,9 +1,13 @@
 <md-card>
-  <h4>{{ 'VOTE-COMPONENT.VOTES-LABEL' | translate }}: {{maxVotes}}</h4>
+  <h4>{{ 'VOTE-COMPONENT.VOTES-LABEL' | translate }}: {{maxRateControl}}</h4>
 </md-card>
 
 <div fxLayout="row" fxLayout.xs="column" *ngIf="retrospective">
-  <div class="block" fxFlex *ngFor="let category of retrospective.categories">
-    <app-category [category]="category" [retrospectiveId]="retrospective._id"></app-category>
+  <div class="block" fxFlex *ngFor="let category of categories">
+    <app-category
+      [category]="category"
+      [retrospectiveId]="retrospective._id"
+      [state]="state"
+      (vote)="vote($event)"></app-category>
   </div>
 </div>
