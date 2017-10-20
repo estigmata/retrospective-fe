@@ -1,8 +1,35 @@
-<ul class="retrospective-list"
-  *ngFor="let retrospective of retrospectiveList">
-  <li>
-    <a routerLink="../../retrospective/{{retrospective._id}}/add-items">
-      {{retrospective.name}}
-    </a>
-  </li>
-</ul>
+<div class="container" *ngIf="retrospectiveList">
+  <table>
+    <tr>
+      <th></th>
+      <th>
+        <h4>{{ 'RETROSPECTIVE.NAME-LABEL' | translate }}</h4>
+      </th>
+      <th>
+        <h4>{{ 'RETROSPECTIVE.STATUS-LABEL' | translate }}</h4>
+      </th>
+      <th>
+        <h4>{{ 'RETROSPECTIVE.DATE-LABEL' | translate }}</h4>
+      </th>
+      <th>
+        <h4>{{ 'RETROSPECTIVE.DESCRIPTION-LABEL' | translate }}</h4>
+      </th>
+    </tr>
+    <tr *ngFor="let retrospective of retrospectiveList; index as i;">
+      <td>{{i + 1}}</td>
+      <td>{{retrospective.name}}</td>
+      <td>
+        <div *ngIf="retrospective.done">
+          <md-icon class="done">done</md-icon>
+          {{ 'RETROSPECTIVE.DONE' | translate }}
+        </div>
+        <div *ngIf="!retrospective.done">
+          <md-icon class="in-progress">schedule</md-icon>
+          {{ 'RETROSPECTIVE.IN-PROGRESS' | translate }}
+        </div>
+      </td>
+      <td>{{retrospective.creationDate | date:'MM/dd/yyyy'}}</td>
+      <td>{{retrospective.name}}</td>
+    </tr>
+  </table>
+</div>

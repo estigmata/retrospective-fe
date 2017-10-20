@@ -18,14 +18,14 @@ export class ItemComponent implements OnInit {
   @Input() state;
   public editMode;
   public itemForm: FormGroup;
+
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MdDialog ) {
     this.itemForm = this.formBuilder.group({
       'summary': [null, Validators.required]
     });
-
-   }
+  }
 
   ngOnInit() {
    this.editMode = !this.item._id;

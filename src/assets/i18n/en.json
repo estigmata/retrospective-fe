@@ -1,7 +1,7 @@
 {
   "APP-COMPONENT" :
   {
-    "TITTLE": "Retrospectives - Workshop"
+    "TITTLE": "Retrospective"
   },
   "LANGUAGE" :
   {
@@ -16,6 +16,7 @@
   },
   "ACTION-ITEM" :
   {
+    "TITLE": "Action item",
     "TEXTAREA-PLACEHOLDER": "Write the action item"
   },
   "DELETE" :
@@ -29,6 +30,16 @@
   "CREATE-RETROSPECTIVE":
   {
     "LAUNCH-LABEL" : "LAUNCH NEW RETROSPECTIVE",
-    "SELECT-STRATEGY" : "Strategy"
+    "SELECT-STRATEGY" : "Strategy",
+    "BUTTON-LABEL": "Create Retrospective"
+  },
+  "RETROSPECTIVE":
+  {
+    "NAME-LABEL": "Name",
+    "STATUS-LABEL": "Status",
+    "DATE-LABEL": "Creation Date",
+    "DESCRIPTION-LABEL": "Description",
+    "DONE": "Done",
+    "IN-PROGRESS": "In progress"
   }
 }

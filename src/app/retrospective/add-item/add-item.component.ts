@@ -7,7 +7,7 @@ import 'rxjs/add/operator/takeUntil';
 
 import { RetrospectiveService } from '../services/retrospective.service';
 import { ItemService } from './../services/item.service';
-import { Retrospective } from '../models/retrospective.model';
+import { Retrospective } from '../../shared/models/retrospective.model';
 import { Item } from '../models/item.model';
 import { Category } from './../models/category.model';
 import { State } from './../models/state.model';

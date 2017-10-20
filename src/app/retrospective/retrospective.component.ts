@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
 
 import { RetrospectiveService } from './services/retrospective.service';
-import { Retrospective } from './models/retrospective.model';
+import { Retrospective } from '../shared/models/retrospective.model';
 
 @Component({
   selector: 'app-retrospective',

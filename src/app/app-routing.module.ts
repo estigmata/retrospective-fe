@@ -3,6 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'team/retrospective-list',
+    pathMatch: 'full'
+  },
+  {
     path: 'retrospective/:id',
     loadChildren: 'app/retrospective/retrospective.module#RetrospectiveModule'
   },

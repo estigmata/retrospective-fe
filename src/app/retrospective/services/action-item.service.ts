@@ -7,12 +7,11 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/map';
 
 import { environment } from '../../../environments/environment';
-import { Retrospective } from '../../shared/models/retrospective.model';
-import { RetrospectiveWrapper } from '../../shared/models/retrospective-wrapper.model';
+import { ActionItemWrapper } from './../models/action-item-wrapper.model';
+import { ActionItem } from './../models/action-item.model';
 
 @Injectable()
-
-export class RetrospectiveService {
+export class ActionItemService {
 
   constructor(private http: HttpClient) {
   }
@@ -23,15 +22,11 @@ export class RetrospectiveService {
     return Observable.throw(errMsg);
   }
 
-  getRetrospective(retrospectiveId: string): Observable<Retrospective> {
-    return this.http.get<RetrospectiveWrapper>(`${environment.backendPath}retrospectives/${retrospectiveId}`)
+  save(newActionItem: ActionItem): Observable<ActionItem> {
+    return this.http.post<ActionItemWrapper>(`${environment.backendPath}action-items`, newActionItem)
       .map(
-        (retrospective: RetrospectiveWrapper) => {
-          return retrospective.data;
-        },
-        (error) => {
-          this.handleError(error);
-        }
+        (item: ActionItemWrapper) => item.data,
+        (error) => this.handleError(error)
       );
   }
 }

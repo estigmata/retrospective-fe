@@ -5,4 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './team-retrospective.component.html',
   styleUrls: ['./team-retrospective.component.css']
 })
-export class TeamRetrospectiveComponent { }
+
+export class TeamRetrospectiveComponent {
+  teamName= 'DEVINT22';
+  projectName= 'Retrospective';
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Retrospective } from './models/retrospective.model';
+import { Retrospective } from '../shared/models/retrospective.model';
 import { Observable } from 'rxjs/Observable';
 import { RetrospectiveService } from './services/retrospective.service';
 

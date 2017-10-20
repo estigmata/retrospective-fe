@@ -9,7 +9,7 @@ import 'rxjs/add/operator/switchMap';
 import { Strategy } from '../models/strategy.model';
 import { StrategyService } from '../services/strategy.service';
 import { RetrospectiveService } from '../services/retrospective.service';
-import { Retrospective } from '../../retrospective/models/retrospective.model';
+import { Retrospective } from '../../shared/models/retrospective.model';
 
 @Component({
   selector: 'app-create-retrospective',
@@ -32,14 +32,18 @@ export class CreateRetrospectiveComponent implements OnInit {
     private route: Router
   ) {
     this.createRetrospectiveForm = this.formBuilder.group({
-      name: [`${this.teamName}-${this.projectName}-${this.newRetrospectiveNumber}`, Validators.required],
+      name: [ `${this.teamName}-${this.projectName}-${this.newRetrospectiveNumber}`, Validators.required ],
       strategies: [ this.currentStrategyId ]
     });
   }
 
   save(newRetrospective) {
-    this.newRetrospective = new Retrospective({ name: newRetrospective.name, categories: [{}] });
+    this.newRetrospective = new Retrospective({
+      name: `${this.teamName}-${this.projectName}-${this.newRetrospectiveNumber}`,
+      categories: [{}]
+    });
     const strategy = this.strategyTemplates.find(selectedStrategy => selectedStrategy._id === newRetrospective.strategies);
+    this.newRetrospective.maxRate = 5;
     this.newRetrospective.categories.pop();
     strategy.categories.forEach( category => this.newRetrospective.categories.push({name: category.name}));
     let recoveredRetrospective: Retrospective;
@@ -60,7 +64,10 @@ export class CreateRetrospectiveComponent implements OnInit {
         retrospectives => {
           this.newRetrospectiveNumber = retrospectives ? retrospectives.length + 1 : 1;
           this.createRetrospectiveForm = this.formBuilder.group({
-            name: [`${this.teamName}-${this.projectName}-${this.newRetrospectiveNumber}`, Validators.required],
+            name: [
+              { value: `${this.teamName}-${this.projectName}-${this.newRetrospectiveNumber}`, disabled: true},
+              Validators.required
+            ],
             strategies: [ this.currentStrategyId ]
           });
         },

@@ -5,9 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { environment } from '../../../environments/environment';
-import { Retrospective } from '../../retrospective/models/retrospective.model';
+import { Retrospective } from '../../shared/models/retrospective.model';
 import { RetrospectiveListWrapper } from '../models/retrospective-list-wrapper.model';
-import { RetrospectiveWrapper } from '../../retrospective/models/retrospective-wrapper.model';
+import { RetrospectiveWrapper } from '../../shared/models/retrospective-wrapper.model';
 
 @Injectable()
 

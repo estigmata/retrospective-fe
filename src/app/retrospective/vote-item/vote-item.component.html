@@ -10,4 +10,7 @@
       [state]="state"
       (vote)="vote($event)"></app-category>
   </div>
+  <button md-fab color="primary" routerLink="../action-items" [disabled]="maxRateControl > 0">
+    <md-icon class="md-18">play_circle_filled</md-icon>
+  </button>
 </div>

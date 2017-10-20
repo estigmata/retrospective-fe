@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { Retrospective } from '../../retrospective/models/retrospective.model';
+import { Retrospective } from '../../shared/models/retrospective.model';
 import { RetrospectiveService } from '../services/retrospective.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { RetrospectiveService } from '../services/retrospective.service';
   templateUrl: './retrospective-list.component.html',
   styleUrls: ['./retrospective-list.component.css']
 })
-export class RetrospectiveListComponent implements OnInit {
 
+export class RetrospectiveListComponent implements OnInit {
   retrospectiveList: Retrospective[];
 
   constructor(
@@ -22,7 +22,7 @@ export class RetrospectiveListComponent implements OnInit {
   ngOnInit() {
     this.retrospectiveListService.getRetrospectiveList().
       subscribe(
-        retrospectives => this.retrospectiveList = retrospectives,
+        retrospectives => this.retrospectiveList = retrospectives.reverse(),
         error => console.error(error)
       );
   }

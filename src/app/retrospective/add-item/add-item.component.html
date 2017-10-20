@@ -2,7 +2,7 @@
   <div class="block" fxFlex *ngFor="let category of categories">
     <app-category [category]="category" [retrospectiveId]="retrospective._id" [state]="state"></app-category>
   </div>
-  <a md-icon-button routerLink="../vote-items" color="primary|accent|warn">
+  <button md-fab color="primary" routerLink="../vote-items">
     <md-icon class="md-18">play_circle_filled</md-icon>
-  </a>
+  </button>
 </div>

@@ -10,7 +10,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   templateUrl: './action-item.component.html',
   styleUrls: ['./action-item.component.css']
 })
-export class ActionItemComponent implements OnInit {
+export class ActionItemComponent implements OnInit, OnChanges {
   @Output() modified = new EventEmitter<ActionItem>();
   @Output() deleted = new EventEmitter<void>();
   @Input() actionItem;

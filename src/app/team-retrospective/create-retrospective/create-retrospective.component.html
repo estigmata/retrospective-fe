@@ -1,6 +1,4 @@
 <div class="container">
-  <h2>{{ projectName }}</h2>
-  <h3>{{ teamName }}</h3>
   <form [formGroup]="createRetrospectiveForm" (ngSubmit)="save(createRetrospectiveForm.value)">
     <md-card>
         <md-card-header>
@@ -23,11 +21,6 @@
               <md-icon class="md-18">forward</md-icon>
           </button>
         </md-card-content>
-        <md-card-footer>
-          <app-retrospective-list></app-retrospective-list>
-        </md-card-footer>
     </md-card>
   </form>
 </div>
-
-

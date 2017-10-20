@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 
 import { RetrospectiveService } from '../services/retrospective.service';
-import { Retrospective } from '../models/retrospective.model';
+import { Retrospective } from '../../shared/models/retrospective.model';
 import { State } from '../models/state.model';
 import { ItemService } from '../services/item.service';
 import { Item } from '../models/item.model';

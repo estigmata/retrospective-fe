@@ -1,0 +1,29 @@
+<h1>{{ 'ACTION-ITEM.TITLE' | translate }}</h1>
+
+<div class="button-row">
+  <button md-fab color="primary" (click)="getPreviewItem()" [disabled]="itemIndex === 0">
+    <md-icon>keyboard_arrow_left</md-icon>
+  </button>
+  <button md-fab color="primary" (click)="getNextItem()" [disabled]="itemIndex === this.itemsInfo.length - 1">
+    <md-icon>keyboard_arrow_right</md-icon>
+  </button>
+</div>
+
+<div *ngIf="itemSelected">
+  <div fxLayout="row" fxLayout.xs="column">
+    <div class="block" fxFlex>
+      <app-item
+        [item]="itemSelected"
+        [state]="state">
+      </app-item>
+
+    </div>
+
+    <div class="block" fxFlex>
+      <app-action-item
+        [actionItem]="actionItemSelected"
+        (modified)="onActionItemModified($event)">
+      </app-action-item>
+    </div>
+  </div>
+</div>

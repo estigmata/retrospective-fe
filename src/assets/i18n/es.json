@@ -1,7 +1,7 @@
 {
   "APP-COMPONENT" :
   {
-    "TITTLE": "Retrospectivas - espacio de trabajo"
+    "TITTLE": "Retrospectiva"
   },
   "LANGUAGE" :
   {
@@ -16,6 +16,7 @@
   },
   "ACTION-ITEM" :
   {
+    "TITLE": "Acciones",
     "TEXTAREA-PLACEHOLDER": "Escribe los elementos de accion"
   },
   "DELETE" :
@@ -29,6 +30,16 @@
   "CREATE-RETROSPECTIVE":
   {
     "LAUNCH-LABEL" : "INICIAR NUEVA RETROSPECTIVA",
-    "SELECT-STRATEGY" : "Estrategia"
+    "SELECT-STRATEGY" : "Estrategia",
+    "BUTTON-LABEL": "Crear Retrospectiva"
+  },
+  "RETROSPECTIVE":
+  {
+    "NAME-LABEL": "Nombre",
+    "STATUS-LABEL": "Estado",
+    "DATE-LABEL": "Fecha de Creacion",
+    "DESCRIPTION-LABEL": "Descripcion",
+    "DONE": "Terminado",
+    "IN-PROGRESS": "En progreso"
   }
 }

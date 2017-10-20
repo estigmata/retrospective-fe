@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
 
-  constructor( private translate: TranslateService ) {
+  constructor( private translate: TranslateService, private router: Router ) {
     this.translate.addLangs(['es', 'en']);
     this.translate.setDefaultLang('es');
     const browserLang = this.translate.getBrowserLang();
@@ -17,6 +18,10 @@ export class AppComponent {
 
   switchLanguage (language: string) {
     this.translate.use(language);
+  }
+
+  redirectToCreateRetrospective() {
+    this.router.navigate([ 'team/create-retrospective' ]);
   }
 
 }

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { TeamRetrospectiveComponent } from './team-retrospective.component';
 import { CreateRetrospectiveComponent } from './create-retrospective/create-retrospective.component';
+import { RetrospectiveListComponent } from './retrospective-list/retrospective-list.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: 'create-retrospective',
         component: CreateRetrospectiveComponent
+      },
+      {
+        path: 'retrospective-list',
+        component: RetrospectiveListComponent
       }
     ]
   }
