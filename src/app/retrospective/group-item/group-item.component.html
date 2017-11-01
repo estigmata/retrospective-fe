@@ -1,10 +1,10 @@
 <div fxLayout.xs="column" >
-  <div fxLayout="row" fxFlex="95" fxLayout.xs="column"  fxLayoutAlign="space-around" *ngIf="retrospective">
+  <div fxLayout="row"  fxFlex="95" fxLayout.xs="column" fxLayoutAlign="space-around" *ngIf="retrospective">
     <div class="block" *ngFor="let category of categories">
       <app-category [category]="category" [retrospectiveId]="retrospective._id" [state]="state"></app-category>
     </div>
   </div>
-  <button md-fab color="primary" routerLink="../group-items" [disabled]="!isAtLeastOneExistingItem()">
+  <button md-fab color="primary" routerLink="../vote-items" [disabled]="!isAtLeastOneExistingItem()">
     <md-icon class="md-18">play_circle_filled</md-icon>
   </button>
 </div>

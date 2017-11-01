@@ -12,9 +12,6 @@
         </md-form-field>
       </md-card-content>
       <md-card-actions align="end">
-        <button md-icon-button type="button" (click)="cancel()" color="warn">
-          <md-icon class="md-18">clear</md-icon>
-        </button>
         <button md-icon-button type="submit" color="primary" [disabled]="!actionItemForm.valid">
           <md-icon class="md-18">done</md-icon>
         </button>
@@ -26,7 +23,7 @@
   <md-card>
     <md-card-actions align="end">
       <button md-icon-button color="primary" (click)="openEditMode()" >       
-        <md-icon>edit</md-icon>        
+        <md-icon class="md-18">edit</md-icon>        
       </button>    
     </md-card-actions>
     <md-card-content>

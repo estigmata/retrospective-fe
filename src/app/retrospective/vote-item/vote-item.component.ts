@@ -37,7 +37,7 @@ export class VoteItemComponent implements OnInit {
       .switchMap(data => {
         this.retrospective = data.retrospective;
         this.maxRateControl = data.retrospective.maxRate;
-        return this.itemService.getByRetrospective(data.retrospective._id);
+        return this.itemService.getItemsWithRatesByUser(data.retrospective._id);
       }).
       takeUntil(this.ngUnsubscribe).
       subscribe(
@@ -51,6 +51,11 @@ export class VoteItemComponent implements OnInit {
               categoryItems
             ));
           });
+          items.filter(item => {
+            if (item.userRate) {
+              this.maxRateControl -= item.userRate;
+            }
+          });
         },
         (error: Error) => console.error('error :', error)
       );
@@ -62,10 +67,10 @@ export class VoteItemComponent implements OnInit {
         this.itemService.vote(rateObject.item._id, rateObject).subscribe(
           () => {
             if (rateObject.isIncrement) {
-              rateObject.item.rate += 1;
+              rateObject.item.userRate += 1;
               this.maxRateControl -= 1;
             } else {
-              rateObject.item.rate -= 1;
+              rateObject.item.userRate -= 1;
               this.maxRateControl += 1;
             }
           },

@@ -6,13 +6,14 @@ import {
   MdInputModule,
   MdButtonModule,
   MdDialogModule,
-  MdToolbarModule
+  MdToolbarModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { DndModule } from 'ng2-dnd';
 
 import { RetrospectiveRoutingModule } from './retrospective-routing.module';
 import { RetrospectiveComponent } from './retrospective.component';
@@ -28,6 +29,7 @@ import { AddActionItemComponent } from './add-action-item/add-action-item.compon
 import { ActionItemComponent } from './action-item/action-item.component';
 import { ItemResolverService } from './resolvers/item/item-resolver.service';
 import { ActionItemService } from './services/action-item.service';
+import { GroupItemComponent } from './group-item/group-item.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { ActionItemService } from './services/action-item.service';
     ConfirmDialogComponent,
     VoteItemComponent,
     AddActionItemComponent,
-    ActionItemComponent
+    ActionItemComponent,
+    GroupItemComponent
   ],
   imports: [
     RetrospectiveRoutingModule,
@@ -55,6 +58,7 @@ import { ActionItemService } from './services/action-item.service';
     ReactiveFormsModule,
     TranslateModule,
     MdDialogModule,
+    DndModule
   ],
   providers: [
     RetrospectiveService,

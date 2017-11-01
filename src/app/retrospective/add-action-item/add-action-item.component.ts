@@ -17,7 +17,7 @@ import { State } from '../models/state.model';
 
 export class AddActionItemComponent implements OnInit {
 
-  public itemsInfo: ItemInfo[];
+  public itemsInfo: ItemInfo[] = [];
 
   public actionItems: ActionItem[];
   public retrospective: Retrospective;
@@ -34,13 +34,16 @@ export class AddActionItemComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.parent.data
-      .subscribe(
+      .switchMap(parentData => {
+        this.retrospective = parentData.retrospective;
+        return this.activatedRoute.data;
+      }).
+      subscribe(
         (data) => {
-          this.retrospective = data.retrospective;
-          this.itemsInfo = [...data.retrospectiveItems];
+          this.itemsInfo = [...data.retrospectiveActionItems];
           this.categoryHashName = this.getCategoriesMapById(this.retrospective.categories);
           this.sortItemsByVote(this.itemsInfo);
-          this.itemsInfo = this.itemsInfo.filter(item => item.votes > 0);
+          this.itemsInfo = this.itemsInfo.filter(item => item.totalVotes > 0);
           if (this.itemsInfo.length > 0) {
             this.itemSelected = this.itemsInfo[this.itemIndex];
             this.actionItems = new Array(this.itemsInfo.length);
@@ -58,13 +61,13 @@ export class AddActionItemComponent implements OnInit {
   }
 
   private sortItemsByVote (items: ItemInfo[]) {
-    items.sort((itemA, itemB) => this.getAllVotedItems(itemB) - this.getAllVotedItems(itemA));
+    items.sort((itemA: ItemInfo, itemB: ItemInfo) => this.getAllVotedItems(itemB) - this.getAllVotedItems(itemA));
   }
 
   private getAllVotedItems (item: ItemInfo) {
-    item.votes = item.rates.reduce((current, next) => next.quantity ? current + next.quantity : current, 0);
+    item.totalVotes = item.rates.reduce((current, next) => next.quantity ? current + next.quantity : current, 0);
     item.categoryName = this.categoryHashName[`${item.category}`];
-    return item.votes;
+    return item.totalVotes;
   }
 
   getCategoriesMapById(categories) {

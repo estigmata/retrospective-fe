@@ -7,14 +7,14 @@ import { VoteItemComponent } from './vote-item/vote-item.component';
 import { RetrospectiveResolverService } from './retrospective-resolver.service';
 import { AddActionItemComponent } from './add-action-item/add-action-item.component';
 import { ItemResolverService } from './resolvers/item/item-resolver.service';
+import { GroupItemComponent } from './group-item/group-item.component';
 
 const routes: Routes = [
   {
     path: '',
     component: RetrospectiveComponent,
     resolve: {
-      retrospective: RetrospectiveResolverService,
-      retrospectiveItems: ItemResolverService
+      retrospective: RetrospectiveResolverService
     },
     children: [
       {
@@ -27,7 +27,14 @@ const routes: Routes = [
       },
       {
         path: 'action-items',
-        component: AddActionItemComponent
+        component: AddActionItemComponent,
+        resolve: {
+          retrospectiveActionItems: ItemResolverService
+        }
+      },
+      {
+        path: 'group-items',
+        component: GroupItemComponent
       }
     ]
   }

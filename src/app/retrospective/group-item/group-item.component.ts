@@ -14,18 +14,18 @@ import { State } from './../models/state.model';
 
 
 @Component({
-  selector: 'app-add-item',
-  templateUrl: './add-item.component.html',
-  styleUrls: ['./add-item.component.css']
+  selector: 'app-group-item',
+  templateUrl: './group-item.component.html',
+  styleUrls: ['./group-item.component.css']
 })
 
-export class AddItemComponent implements OnInit, OnDestroy {
+export class GroupItemComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   public retrospective: Retrospective;
   public categories: Category[] = [];
-  public state = new State ({ edit: true });
+  public state = new State ({ group: true });
 
   constructor(
     private retrospectiveService: RetrospectiveService,
@@ -34,21 +34,17 @@ export class AddItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.
-      switchMap(param => {
-        return this.retrospectiveService.getRetrospective(param['id']);
-      }).
-      switchMap((retrospectiveResponse: Retrospective) => {
-        this.retrospective = retrospectiveResponse;
-        return this.itemService.getByRetrospective(retrospectiveResponse._id);
-      }).
-      takeUntil(this.ngUnsubscribe).
-      subscribe(
+    this.activatedRoute.parent.data
+      .switchMap(data => {
+        this.retrospective = data.retrospective;
+        return this.itemService.getByRetrospective(this.retrospective._id);
+      })
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe(
         (items: Item[]) => {
-          this.categories = new Array();
-          this.retrospective.categories.forEach(category => {
+           this.categories = this.retrospective.categories.map(category => {
             const categoryItems = items.filter(item => item.category === category._id);
-            this.categories.push(new Category(
+            return (new Category(
               category._id,
               category.name,
               categoryItems

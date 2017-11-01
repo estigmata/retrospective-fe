@@ -6,7 +6,8 @@ import { RateObject } from './../models/rate-object.model';
 
 @Component({
   selector: 'app-category',
-  templateUrl: './category.component.html'
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
   @Input() category;
@@ -22,15 +23,20 @@ export class CategoryComponent implements OnInit {
     }
   }
   addItem() {
-    const newItem = new Item ({ category: this.category._id, retrospective: this.retrospectiveId });
+    const newItem = new Item ({
+      category: this.category._id,
+      retrospective: this.retrospectiveId,
+      children: [],
+      parent: true
+    });
     this.items.unshift(newItem);
   }
 
-  onItemModified(newitem: Item) {
-    if (!newitem._id) {
-      this.itemService.save(newitem).subscribe(
+  onItemModified(newItem: Item) {
+    if (!newItem._id) {
+      this.itemService.save(newItem).subscribe(
         (item: Item) => {
-          Object.assign(newitem, item);
+          Object.assign(newItem, item);
         },
         (err) => {
           console.log(err);
@@ -38,9 +44,9 @@ export class CategoryComponent implements OnInit {
         }
       );
     } else {
-      this.itemService.update(newitem._id, newitem).subscribe(
+      this.itemService.update(newItem._id, newItem).subscribe(
         (item: Item) => {
-          Object.assign(newitem, item);
+          Object.assign(newItem, item);
         },
         (err) => {
           console.log(err);
@@ -65,7 +71,39 @@ export class CategoryComponent implements OnInit {
   }
 
   voteItem(isIncrement, index) {
-    const rateObject = new RateObject({ isIncrement: isIncrement, item: this.items[index] });
+    const rateObject = new RateObject({
+      isIncrement: isIncrement,
+      item: this.items[index],
+      userId: 1
+    });
     this.vote.emit(rateObject);
   }
+
+  onGroup(foreingItem: any, localItem: Item) {
+    if (foreingItem.dragData._id !== localItem._id) {
+      if (!localItem.children.length) {
+        const newItem = new Item({
+          summary: `${this.category.name} group`,
+          retrospective: localItem.retrospective,
+          category: localItem.category,
+          children: [foreingItem.dragData, localItem],
+          parent: true
+        });
+        foreingItem.dragData.parent = false;
+        localItem.parent = false;
+        this.onItemModified(localItem);
+        this.onItemModified(foreingItem.dragData);
+        this.onItemModified(newItem);
+        this.items.splice(this.items.findIndex(someItem => {
+          return someItem._id === localItem._id;
+        }) + 1, 0, newItem);
+      } else {
+        foreingItem.dragData.parent = false;
+        localItem.children.push(foreingItem.dragData);
+        this.onItemModified(foreingItem.dragData);
+        this.onItemModified(localItem);
+      }
+    }
+  }
+
 }

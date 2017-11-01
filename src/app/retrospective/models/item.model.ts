@@ -5,9 +5,10 @@ export class Item {
   summary?: String;
   retrospective?: String;
   category?: String;
-  children?: String;
+  children?: Item[];
   rates?: Rate[];
-  rate? = 0;
+  userRate? = 0;
+  parent? = true;
 
   constructor(params: Item) {
     Object.assign(this, params);

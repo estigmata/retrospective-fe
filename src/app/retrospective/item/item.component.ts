@@ -28,8 +28,7 @@ export class ItemComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.editMode = !this.item._id;
-   this.item.rate = 0;
+   this.editMode = !this.item.summary;
   }
 
   save(newItemValue) {
@@ -64,7 +63,7 @@ export class ItemComponent implements OnInit {
   }
 
   removeRate() {
-    if (this.item.rate > 0) {
+    if (this.item.userRate > 0) {
       this.vote.emit(false);
     }
   }

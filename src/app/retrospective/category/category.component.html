@@ -1,20 +1,25 @@
-<md-card>
-  <md-card-header>
-    <md-card-title><h4>{{category.name}}</h4></md-card-title>
-  </md-card-header>
-  <md-card-actions align="end" *ngIf="state.edit">
-    <a md-icon-button color="primary" (click)="addItem()">
-      <md-icon class="md-18">add_circle</md-icon>
-    </a>
-  </md-card-actions>
-  <md-card-content>
-    <div *ngFor= "let item of items; let i = index">
-      <app-item
-        [item]="item"
-        [state]="state"
-        (modified)="onItemModified($event)"
-        (deleted)="onItemDeleted(i)"
-        (vote)="voteItem($event, i)"></app-item>
-    </div>  
-  </md-card-content>
-</md-card>
+<div class="container"  fxFlex="500px">
+  <md-card class="categorybg">
+    <md-card-header>
+      <md-card-title><h4>{{category.name}}</h4></md-card-title>
+    </md-card-header>
+    <md-card-actions align="end" *ngIf="state.edit">
+      <a md-icon-button color="primary" (click)="addItem()">
+        <md-icon class="md-18">add_circle</md-icon>
+      </a>
+    </md-card-actions>
+    <md-card-content >
+      <div *ngFor= "let item of items; let i = index" dnd-draggable [dragEnabled]="!item.children.length && state.group" [dragData]="item">
+        <app-item
+          [item]="item"
+          [state]="state"
+          (modified)="onItemModified($event)"
+          (deleted)="onItemDeleted(i)"
+          (vote)="voteItem($event, i)"
+          dnd-droppable
+          [dropEnabled]="state.group"
+          (onDropSuccess)="onGroup($event, item)"></app-item>
+      </div>  
+    </md-card-content>
+  </md-card>
+</div>
