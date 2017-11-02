@@ -32,7 +32,7 @@ export class ItemService {
   }
 
   getItemsWithRatesByUser(retrospectiveId: string, userId = '1'): Observable<Item[]> {
-    return this.http.get<ItemsWrapper>(`${environment.backendPath}items/${retrospectiveId}/${userId}`)
+    return this.http.get<ItemsWrapper>(`${environment.backendPath}items/rates/?retrospectiveId=${retrospectiveId}&userId=${userId}`)
       .map(
         (item: ItemsWrapper) => item.data,
         (error) => this.handleError(error)
@@ -40,15 +40,12 @@ export class ItemService {
   }
 
   save(newItem: Item): Observable<Item> {
-    //return this.http.post<ItemWrapper>(`${environment.backendPath}retrospectives/${newItem.retrospective}/items`, newItem)
-    console.log('[FE] New item: ', newItem);
     return this.http.post<ItemWrapper>(`${environment.backendPath}items/`, newItem)
       .map(
         (item: ItemWrapper) => {
           return item.data;
         },
         (error) => {
-          console.log('[FE] Some erro: ', error);
           this.handleError(error);
         }
       );
@@ -77,19 +74,6 @@ export class ItemService {
         }
       );
   }
-
-  /*vote (itemId: String, isIncrement): Observable<Item> {
-    const userId = 1;
-    return this.http.put<ItemWrapper>(`${environment.backendPath}items/${itemId}/rates/${userId}`, isIncrement)
-    .map (
-      (itemUpdated: ItemWrapper) => {
-        return itemUpdated.data;
-      },
-      (error) => {
-        this.handleError(error);
-      }
-    );
-  }*/
 
   vote(itemId, itemRate): Observable<Item> {
     return this.http.put<ItemWrapper>(`${environment.backendPath}items/${itemId}/rates`, itemRate).
