@@ -41,12 +41,14 @@ export class ItemService {
 
   save(newItem: Item): Observable<Item> {
     //return this.http.post<ItemWrapper>(`${environment.backendPath}retrospectives/${newItem.retrospective}/items`, newItem)
+    console.log('[FE] New item: ', newItem);
     return this.http.post<ItemWrapper>(`${environment.backendPath}items/`, newItem)
       .map(
         (item: ItemWrapper) => {
           return item.data;
         },
         (error) => {
+          console.log('[FE] Some erro: ', error);
           this.handleError(error);
         }
       );

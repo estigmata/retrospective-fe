@@ -34,6 +34,7 @@ export class CategoryComponent implements OnInit {
 
   onItemModified(newItem: Item) {
     if (!newItem._id) {
+      console.log('[FE] Category: New Item: ', newItem);
       this.itemService.save(newItem).subscribe(
         (item: Item) => {
           Object.assign(newItem, item);
