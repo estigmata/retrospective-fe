@@ -11,6 +11,7 @@
   "ITEM" :
   {
     "TEXTAREA-PLACEHOLDER": "Escribe tu comentario",
+    "GROUP-ITEM": "Grupo sin nombre",
     "CATEGORY": "Categoria:",
     "VOTES": "Votos"
   },

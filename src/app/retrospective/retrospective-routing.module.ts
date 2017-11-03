@@ -8,6 +8,7 @@ import { RetrospectiveResolverService } from './retrospective-resolver.service';
 import { AddActionItemComponent } from './add-action-item/add-action-item.component';
 import { ItemResolverService } from './resolvers/item/item-resolver.service';
 import { GroupItemComponent } from './group-item/group-item.component';
+import { ReportComponent } from './report/report.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
       {
         path: 'group-items',
         component: GroupItemComponent
+      },
+      {
+        path: 'report',
+        component: ReportComponent
       }
     ]
   }

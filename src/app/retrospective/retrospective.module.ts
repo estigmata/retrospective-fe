@@ -30,6 +30,7 @@ import { ActionItemComponent } from './action-item/action-item.component';
 import { ItemResolverService } from './resolvers/item/item-resolver.service';
 import { ActionItemService } from './services/action-item.service';
 import { GroupItemComponent } from './group-item/group-item.component';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { GroupItemComponent } from './group-item/group-item.component';
     VoteItemComponent,
     AddActionItemComponent,
     ActionItemComponent,
-    GroupItemComponent
+    GroupItemComponent,
+    ReportComponent
   ],
   imports: [
     RetrospectiveRoutingModule,

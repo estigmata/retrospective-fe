@@ -45,9 +45,7 @@ export class ItemService {
         (item: ItemWrapper) => {
           return item.data;
         },
-        (error) => {
-          this.handleError(error);
-        }
+        (error) => this.handleError(error)
       );
   }
 
@@ -57,29 +55,25 @@ export class ItemService {
         (itemDeleted: ItemWrapper) => {
           return itemDeleted.data;
         },
-        (error) => {
-          this.handleError(error);
-        }
+        (error) => this.handleError(error)
       );
   }
 
   update(itemId: String, newItem): Observable<Item> {
     return this.http.put<ItemWrapper>(`${environment.backendPath}items/${itemId}`, newItem)
       .map (
-        (itemUpdated: ItemWrapper) => {
-          return itemUpdated.data;
-        },
-        (error) => {
-          this.handleError(error);
-        }
+        (itemUpdated: ItemWrapper) => itemUpdated.data,
+        (error) => this.handleError(error)
       );
   }
 
-  vote(itemId, itemRate): Observable<Item> {
+  vote(itemId: String, itemRate): Observable<Item> {
+    itemRate.userId = '1';
     return this.http.put<ItemWrapper>(`${environment.backendPath}items/${itemId}/rates`, itemRate).
       map(
-        (itemUpdated: ItemWrapper) => { return itemUpdated.data },
-        (error) => { this.handleError(error) }
+        (itemUpdated: ItemWrapper) => itemUpdated.data,
+        (error) => this.handleError(error)
       );
   }
+
 }

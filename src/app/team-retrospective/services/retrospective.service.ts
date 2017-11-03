@@ -33,6 +33,13 @@ export class RetrospectiveService {
       );
   }
 
+  getNewRetrospectiveName(): Observable<Retrospective> {
+    return this.http.get<Retrospective>(`${environment.backendPath}retrospectives/next/retrospectiveName`)
+      .map(retrospective => {
+        return retrospective;
+      });
+  }
+
   saveRetrospective(newRetrospective: Retrospective): Observable<Retrospective> {
     return this.http.post<RetrospectiveWrapper>(`${environment.backendPath}retrospectives`, newRetrospective)
       .map(

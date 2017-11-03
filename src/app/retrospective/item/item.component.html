@@ -21,6 +21,13 @@
               <md-icon class="md-18">done</md-icon>
             </button>
           </md-card-actions>
+          <div *ngFor="let child of item.children" class="container">
+            <md-card>
+                <md-card-content>
+                  {{child.summary}}
+                </md-card-content>
+            </md-card>
+          </div>
         </md-card>
       </form>
     </div>

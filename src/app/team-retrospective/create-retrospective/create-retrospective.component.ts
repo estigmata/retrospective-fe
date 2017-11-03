@@ -58,16 +58,12 @@ export class CreateRetrospectiveComponent implements OnInit {
     this.strategyService.getStrategies()
       .switchMap((strategies: Strategy[]) => {
           this.strategyTemplates = strategies;
-          return this.retrospectiveService.getRetrospectiveList();
+          return this.retrospectiveService.getNewRetrospectiveName();
       })
       .subscribe(
-        retrospectives => {
-          this.newRetrospectiveNumber = retrospectives ? retrospectives.length + 1 : 1;
+        retrospective => {
           this.createRetrospectiveForm = this.formBuilder.group({
-            name: [
-              { value: `${this.teamName}-${this.projectName}-${this.newRetrospectiveNumber}`, disabled: true},
-              Validators.required
-            ],
+            name: [{ value: retrospective.name, disabled: true}, Validators.required],
             strategies: [ this.currentStrategyId ]
           });
         },
