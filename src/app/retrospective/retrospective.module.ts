@@ -75,8 +75,7 @@ import { ReportComponent } from './report/report.component';
     RetrospectiveComponent,
     ItemComponent,
     ConfirmDialogComponent,
-    ActionItemComponent,
-    ReportComponent
+    ActionItemComponent
   ],
   entryComponents: [ConfirmDialogComponent]
 })

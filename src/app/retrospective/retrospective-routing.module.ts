@@ -45,7 +45,10 @@ const routes: Routes = [
       },
       {
         path: 'report',
-        component: ReportComponent
+        component: ReportComponent,
+        resolve: {
+          retrospectiveData: RetrospectiveResolverService
+        }
       }
     ]
   }

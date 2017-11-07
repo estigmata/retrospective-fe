@@ -3,8 +3,8 @@
     <md-card>
       <md-card-content>
         <md-form-field class="full-width" >
-          <textarea 
-            mdInput 
+          <textarea
+            mdInput
             placeholder="{{ 'ACTION-ITEM.TEXTAREA-PLACEHOLDER' | translate }}"
             formControlName="summary"
             tabindex="0"
@@ -27,9 +27,9 @@
 <div *ngIf="!editMode">
   <md-card>
     <md-card-actions align="end">
-      <button md-icon-button class="item-menu-icon" (click)="openEditMode()" >       
-        <md-icon class="md-18">edit</md-icon>        
-      </button>    
+      <button md-icon-button class="item-menu-icon" (click)="openEditMode()" >
+        <md-icon class="md-18">edit</md-icon>
+      </button>
     </md-card-actions>
     <md-card-content>
       {{actionItem.summary}}
