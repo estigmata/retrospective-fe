@@ -9,16 +9,17 @@
                 mdInput
                 placeholder="{{ 'ITEM.TEXTAREA-PLACEHOLDER' | translate }}"
                 formControlName="summary"
-                tabindex="0">
+                (keyup.enter)="save(itemForm.value)"
+                (keyup.esc)="cancel()">
               </textarea>
             </md-form-field>
           </md-card-content>
           <md-card-actions align="end">
-            <button md-icon-button type="button" (click)="cancel()" color="warn">
-              <md-icon class="md-18">clear</md-icon>
+            <button md-raised-button class="cancelButton" (click)="cancel()">
+              <span>{{ "BUTTONS.CANCEL" | translate }}</span>
             </button>
-            <button md-icon-button type="submit" color="primary" [disabled]="!itemForm.valid">
-              <md-icon class="md-18">done</md-icon>
+            <button md-raised-button type="submit" color="accent" [disabled]="!itemForm.valid">
+              <span>{{ "BUTTONS.ACCEPT" | translate }}</span>
             </button>
           </md-card-actions>
           <div *ngFor="let child of item.children" class="container">
@@ -33,39 +34,49 @@
     </div>
     <div *ngIf="!editMode">
       <md-card>
-        <md-card-header *ngIf="state.addAction">
-          <md-card-title>
-            <h2>{{ "ITEM.CATEGORY" | translate }} {{item.categoryName}}</h2>
-            <h4>{{ "ITEM.VOTES" | translate }} {{item.totalVotes}}</h4>
-          </md-card-title>
-        </md-card-header>
-        <md-card-actions align="end" *ngIf="state.group && item.children.length">
-          <button md-icon-button color="primary" (click)="openEditMode()" >       
-            <md-icon class="md-18">edit</md-icon>        
-          </button>
-        </md-card-actions>
-        <md-card-actions align="end" *ngIf="state.vote">
-          <div class="like-icon">
-            <md-icon class="md-18">thumb_up</md-icon> {{item.userRate}}
+        <div fxLayout="row" fxLayoutAlign="start">
+          <md-card-header *ngIf="state.addAction">
+            <md-card-title>
+              <h2>{{ "ITEM.CATEGORY" | translate }} {{item.categoryName}}</h2>
+              <h4>{{ "ITEM.VOTES" | translate }} {{item.totalVotes}}</h4>
+            </md-card-title>
+          </md-card-header>
+          <md-card-content fxFlex="95">
+            {{item.summary}}
+          </md-card-content>
+          <div fxFlex></div>
+          <div fxFlex align="end" *ngIf="state.group && item.children.length">
+            <md-icon [mdMenuTriggerFor]="groupMenu">more_vert</md-icon>
+            <md-menu class="menu-icon" #groupMenu="mdMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+              <a md-icon-button class="item-menu-icon" (click)="openEditMode()" >       
+                <md-icon class="md-18">edit</md-icon>        
+              </a>
+            </md-menu>
           </div>
-          <a md-icon-button  color="warn" (click)="removeRate()">
-            <md-icon class="md-18">exposure_neg_1</md-icon>
-          </a>
-          <a md-icon-button color="primary" (click)="addRate()">
-            <md-icon class="md-18">plus_one</md-icon>
-          </a>
-        </md-card-actions>
-        <md-card-actions align="end" *ngIf="state.edit">
-          <button md-icon-button color="primary" (click)="openEditMode()" >
-            <md-icon class="md-18">edit</md-icon>
-          </button>
-          <a md-icon-button color="warn" (click)="openDialog()" >
-            <md-icon class="md-18">delete</md-icon>
-          </a>
-        </md-card-actions>
-        <md-card-content>
-          {{item.summary}}
-        </md-card-content>
+          <div fxFlex fxLayout="row" align="end" *ngIf="state.vote">
+            <a md-icon-button class="over-accent-txt" (click)="removeRate()">
+              <md-icon class="md-18">exposure_neg_1</md-icon>
+            </a>
+            <div class="like-icon">
+              <md-icon color="accent" class="md-18">thumb_up</md-icon>
+            </div>
+            <p class="accent-txt"> {{item.userRate}} </p>
+            <a md-icon-button class="over-accent-txt" (click)="addRate()">
+              <md-icon class="md-18">plus_one</md-icon>
+            </a>
+          </div>
+          <div  fxFlex *ngIf="state.edit">
+            <md-icon [mdMenuTriggerFor]="itemMenu">more_vert</md-icon>
+            <md-menu class="menu-icon" #itemMenu="mdMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+              <a md-icon-button class="item-menu-icon" (click)="openEditMode()" >
+                <md-icon class="md-18">edit</md-icon>
+              </a>
+              <a md-icon-button class="item-menu-icon" (click)="openDialog()" >
+                <md-icon class="md-18">delete</md-icon>
+              </a>
+            </md-menu>
+          </div>
+        </div>
         <div *ngFor="let child of item.children" class="container">
           <md-card>
               <md-card-content>

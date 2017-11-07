@@ -23,10 +23,9 @@ export class RetrospectiveComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.activatedRoute.data.subscribe(
-      (data) => this.retrospective = data.retrospective,
-      (error: Error) => console.error('error')
-    );
+    this.activatedRoute.children[0].data
+    .subscribe(({retrospectiveData: data}) => {
+        this.retrospective = data.retrospective;
+      });
   }
 }

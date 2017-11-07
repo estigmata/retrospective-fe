@@ -7,13 +7,18 @@
             mdInput 
             placeholder="{{ 'ACTION-ITEM.TEXTAREA-PLACEHOLDER' | translate }}"
             formControlName="summary"
-            tabindex="0">
+            tabindex="0"
+            (keyup.enter)="save(actionItemForm.value)"
+            (keyup.esc)="onClean()">
           </textarea>
         </md-form-field>
       </md-card-content>
       <md-card-actions align="end">
-        <button md-icon-button type="submit" color="primary" [disabled]="!actionItemForm.valid">
-          <md-icon class="md-18">done</md-icon>
+        <button md-raised-button type="button" class="cancelButton" (click)="onClean()">
+          <span>{{ "BUTTONS.CANCEL" | translate }}</span>
+        </button>
+        <button md-raised-button type="submit" color="accent" [disabled]="!actionItemForm.valid">
+          <span>{{ "BUTTONS.ACCEPT" | translate }}</span>
         </button>
       </md-card-actions>
     </md-card>
@@ -22,7 +27,7 @@
 <div *ngIf="!editMode">
   <md-card>
     <md-card-actions align="end">
-      <button md-icon-button color="primary" (click)="openEditMode()" >       
+      <button md-icon-button class="item-menu-icon" (click)="openEditMode()" >       
         <md-icon class="md-18">edit</md-icon>        
       </button>    
     </md-card-actions>

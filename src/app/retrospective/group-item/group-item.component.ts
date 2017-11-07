@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -8,6 +8,7 @@ import 'rxjs/add/operator/takeUntil';
 import { RetrospectiveService } from '../services/retrospective.service';
 import { ItemService } from './../services/item.service';
 import { Retrospective } from '../../shared/models/retrospective.model';
+import { RetrospectiveData } from '../models/retrospective-data.model';
 import { Item } from '../models/item.model';
 import { Category } from './../models/category.model';
 import { State } from './../models/state.model';
@@ -30,20 +31,17 @@ export class GroupItemComponent implements OnInit, OnDestroy {
   constructor(
     private retrospectiveService: RetrospectiveService,
     private itemService: ItemService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.parent.data
-      .switchMap(data => {
-        this.retrospective = data.retrospective;
-        return this.itemService.getByRetrospective(this.retrospective._id);
-      })
-      .takeUntil(this.ngUnsubscribe)
+    this.activatedRoute.data
       .subscribe(
-        (items: Item[]) => {
-           this.categories = this.retrospective.categories.map(category => {
-            const categoryItems = items.filter(item => item.category === category._id);
+        ({retrospectiveData: data}) => {
+          this.retrospective = data.retrospective;
+          this.categories = this.retrospective.categories.map(category => {
+            const categoryItems = data.items.filter(item => item.category === category._id);
             return (new Category(
               category._id,
               category.name,
@@ -65,5 +63,14 @@ export class GroupItemComponent implements OnInit, OnDestroy {
       category => category.items && category.items.length && category.items.some(
         item => !!item._id
     ));
+  }
+
+  nextStep() {
+    this.retrospectiveService.goToNextStep(this.retrospective._id)
+      .subscribe(retrospective => {
+        if (retrospective) {
+          this.router.navigate([`retrospective/${this.retrospective._id}/vote-items`]);
+        }
+      });
   }
 }

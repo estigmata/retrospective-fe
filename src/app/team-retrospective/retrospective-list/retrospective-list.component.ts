@@ -21,8 +21,7 @@ export class RetrospectiveListComponent implements OnInit {
 
   ngOnInit() {
     this.retrospectiveListService.getRetrospectiveList().
-      subscribe(
-        retrospectives => this.retrospectiveList = retrospectives.reverse(),
+      subscribe(retrospectives => this.retrospectiveList = retrospectives.reverse(),
         error => console.error(error)
       );
   }

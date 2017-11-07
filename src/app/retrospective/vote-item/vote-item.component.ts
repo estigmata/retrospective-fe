@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -24,34 +24,31 @@ export class VoteItemComponent implements OnInit {
   public state = new State ({ vote: true });
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   public categories: Category[];
-  public maxRateControl: number;
+  public maxRateControl: any;
 
   constructor(
     private retrospectiveService: RetrospectiveService,
     private activatedRoute: ActivatedRoute,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.parent.data
-      .switchMap(data => {
-        this.retrospective = data.retrospective;
-        this.maxRateControl = data.retrospective.maxRate;
-        return this.itemService.getItemsWithRatesByUser(data.retrospective._id);
-      }).
-      takeUntil(this.ngUnsubscribe).
-      subscribe(
-        (items: Item[]) => {
+    this.activatedRoute.data
+      .subscribe(
+        ({retrospectiveData: data}) => {
+          this.retrospective = data.retrospective;
+          this.maxRateControl = this.retrospective.maxRate;
           this.categories = new Array();
           this.retrospective.categories.forEach(category => {
-            const categoryItems = items.filter(item => item.category === category._id);
+            const categoryItems = data.items.filter(item => item.category === category._id);
             this.categories.push(new Category(
               category._id,
               category.name,
               categoryItems
             ));
           });
-          items.filter(item => {
+          data.items.filter(item => {
             if (item.userRate) {
               this.maxRateControl -= item.userRate;
             }
@@ -77,5 +74,14 @@ export class VoteItemComponent implements OnInit {
           (Error) => console.log
         );
       }
+  }
+
+  nextStep() {
+    this.retrospectiveService.goToNextStep(this.retrospective._id)
+      .subscribe(retrospective => {
+        if (retrospective) {
+          this.router.navigate([`retrospective/${this.retrospective._id}/${retrospective.currentStep}`]);
+        }
+      });
   }
 }

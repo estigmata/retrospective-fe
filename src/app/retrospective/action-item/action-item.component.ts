@@ -40,13 +40,6 @@ export class ActionItemComponent implements OnInit, OnChanges {
     this.modified.emit(this.actionItem);
   }
 
-  cancel() {
-    this.editMode = false;
-    if (!this.actionItem._id) {
-      this.deleted.emit();
-    }
-  }
-
   openEditMode () {
     this.editMode = true;
     this.actionItemForm = this.formBuilder.group({
@@ -54,4 +47,14 @@ export class ActionItemComponent implements OnInit, OnChanges {
     });
   }
 
+  onClean() {
+    this.actionItem._id ?
+    this.actionItemForm = this.formBuilder.group({
+      'summary': [this.actionItem.summary, Validators.required]
+    }) : 
+    this.actionItemForm = this.formBuilder.group({
+      'summary': ["", Validators.required]
+    }); 
+    this.editMode = true;
+  }
 }

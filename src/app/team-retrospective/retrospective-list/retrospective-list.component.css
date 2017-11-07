@@ -16,3 +16,8 @@ th, td {
 .in-progress {
   color: #b4c300;
 }
+
+a {
+  color: black;
+  text-decoration: none;
+}

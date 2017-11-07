@@ -3,10 +3,10 @@
     {{data.title}}?
 </div>
 <div md-dialog-actions align="end">
-  <button md-icon-button (click)="onNoClick()" color="warn">
-    <md-icon class="md-18">cancel</md-icon>
+  <button md-raised-button class="cancelButton" tabindex="-1" (click)="onNoClick()">
+    <span>{{ "BUTTONS.CANCEL" | translate }}</span>
   </button>
-  <button md-icon-button [md-dialog-close]="" (click)="onYesClick()" color="primary">
-    <md-icon class="md-18">check_circle</md-icon>
+  <button md-raised-button [md-dialog-close]="" tabindex="1" (click)="onYesClick()" color="accent">
+    <span>{{ "BUTTONS.ACCEPT" | translate }}</span>
   </button>
 </div>

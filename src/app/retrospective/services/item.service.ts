@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
@@ -10,6 +10,7 @@ import { environment } from '../../../environments/environment';
 import { Item } from '../models/item.model';
 import { ItemsWrapper } from '../models/items-wrapper.model';
 import { ItemWrapper } from '../models/item-wrapper.model';
+import { RateObject } from '../models/rate-object.model';
 
 @Injectable()
 export class ItemService {
@@ -24,7 +25,8 @@ export class ItemService {
   }
 
   getByRetrospective(retrospectiveId: string): Observable<Item[]> {
-    return this.http.get<ItemsWrapper>(`${environment.backendPath}items/?retrospective=${retrospectiveId}`)
+    const params = new HttpParams().set('retrospective', retrospectiveId);
+    return this.http.get<ItemsWrapper>(`${environment.backendPath}items/`, { params: params })
       .map(
         (item: ItemsWrapper) => item.data,
         (error) => this.handleError(error)
@@ -32,7 +34,11 @@ export class ItemService {
   }
 
   getItemsWithRatesByUser(retrospectiveId: string, userId = '1'): Observable<Item[]> {
-    return this.http.get<ItemsWrapper>(`${environment.backendPath}items/rates/?retrospectiveId=${retrospectiveId}&userId=${userId}`)
+    let params = new HttpParams();
+
+    params = params.append('retrospectiveId', retrospectiveId);
+    params = params.append('userId', userId);
+    return this.http.get<ItemsWrapper>(`${environment.backendPath}items/rates/`, { params: params })
       .map(
         (item: ItemsWrapper) => item.data,
         (error) => this.handleError(error)
@@ -42,9 +48,7 @@ export class ItemService {
   save(newItem: Item): Observable<Item> {
     return this.http.post<ItemWrapper>(`${environment.backendPath}items/`, newItem)
       .map(
-        (item: ItemWrapper) => {
-          return item.data;
-        },
+        (item: ItemWrapper) => item.data,
         (error) => this.handleError(error)
       );
   }
@@ -52,14 +56,12 @@ export class ItemService {
   delete(itemId: String): Observable<Item> {
     return this.http.delete<ItemWrapper>(`${environment.backendPath}items/${itemId}`)
       .map (
-        (itemDeleted: ItemWrapper) => {
-          return itemDeleted.data;
-        },
+        (itemDeleted: ItemWrapper) => itemDeleted.data,
         (error) => this.handleError(error)
       );
   }
 
-  update(itemId: String, newItem): Observable<Item> {
+  update(itemId: String, newItem: Item): Observable<Item> {
     return this.http.put<ItemWrapper>(`${environment.backendPath}items/${itemId}`, newItem)
       .map (
         (itemUpdated: ItemWrapper) => itemUpdated.data,
@@ -67,7 +69,7 @@ export class ItemService {
       );
   }
 
-  vote(itemId: String, itemRate): Observable<Item> {
+  vote(itemId: String, itemRate: RateObject): Observable<Item> {
     itemRate.userId = '1';
     return this.http.put<ItemWrapper>(`${environment.backendPath}items/${itemId}/rates`, itemRate).
       map(

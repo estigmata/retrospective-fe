@@ -10,6 +10,7 @@ export class Retrospective {
   maxRate?: number;
   creationDate?: Date;
   done?: boolean;
+  currentStep?: string;
 
   constructor(params: Retrospective) {
     Object.assign(this, params);

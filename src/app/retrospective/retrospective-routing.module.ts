@@ -14,28 +14,34 @@ const routes: Routes = [
   {
     path: '',
     component: RetrospectiveComponent,
-    resolve: {
-      retrospective: RetrospectiveResolverService
-    },
     children: [
       {
         path: 'add-items',
-        component: AddItemComponent
+        component: AddItemComponent,
+        resolve: {
+          retrospectiveData: RetrospectiveResolverService
+        }
       },
       {
         path: 'vote-items',
-        component: VoteItemComponent
+        component: VoteItemComponent,
+        resolve: {
+          retrospectiveData: RetrospectiveResolverService
+        }
       },
       {
         path: 'action-items',
         component: AddActionItemComponent,
         resolve: {
-          retrospectiveActionItems: ItemResolverService
+          retrospectiveData: RetrospectiveResolverService
         }
       },
       {
         path: 'group-items',
-        component: GroupItemComponent
+        component: GroupItemComponent,
+        resolve: {
+          retrospectiveData: RetrospectiveResolverService
+        }
       },
       {
         path: 'report',

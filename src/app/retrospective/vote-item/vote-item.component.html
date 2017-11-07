@@ -3,7 +3,7 @@
 </md-card>
 
 <div fxLayout.xs="column" >
-  <div fxLayout="row" fxFlex="95" fxLayout.xs="column" fxLayoutAlign="space-around" *ngIf="retrospective">
+  <div fxLayout="row" fxFlex="95" fxLayout.xs="column" fxLayoutAlign="center" *ngIf="retrospective">
     <div class="block"*ngFor="let category of categories">
       <app-category
         [category]="category"
@@ -12,7 +12,7 @@
         (vote)="vote($event)"></app-category>
     </div>
   </div>
-  <button md-fab color="primary" routerLink="../action-items" [disabled]="maxRateControl > 0">
+  <button md-fab color="primary" (click)="nextStep()" [disabled]="maxRateControl > 0">
     <md-icon class="md-18">play_circle_filled</md-icon>
   </button>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Input, Output, ViewChild, EventEmitter, Inject, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MdFormFieldModule, MdDialog } from '@angular/material';
 
@@ -16,6 +16,7 @@ export class ItemComponent implements OnInit {
   @Output() deleted = new EventEmitter<void>();
   @Output() vote = new EventEmitter<boolean>();
   @Input() state;
+  
   public editMode;
   public itemForm: FormGroup;
 
@@ -28,7 +29,7 @@ export class ItemComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.editMode = !this.item.summary;
+    this.editMode = !this.item.summary;
   }
 
   save(newItemValue) {

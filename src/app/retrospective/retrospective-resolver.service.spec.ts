@@ -1,11 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
-
+import { RetrospectiveService } from './services/retrospective.service';
 import { RetrospectiveResolverService } from './retrospective-resolver.service';
 
 describe('RetrospectiveResolverService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RetrospectiveResolverService]
+      providers: [
+        RetrospectiveResolverService,
+        { provide: RetrospectiveService, useValue: {}}
+      ]
     });
   });
 

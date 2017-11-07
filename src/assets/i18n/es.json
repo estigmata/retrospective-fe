@@ -42,5 +42,10 @@
     "DESCRIPTION-LABEL": "Descripcion",
     "DONE": "Terminado",
     "IN-PROGRESS": "En progreso"
+  },
+  "BUTTONS":
+  {
+    "ACCEPT": "Aceptar",
+    "CANCEL": "Cancelar"
   }
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ActionItemService } from '../services/action-item.service';
 
 import { Retrospective } from '../../shared/models/retrospective.model';
+import { RetrospectiveService } from './../services/retrospective.service';
 import { Item } from './../models/item.model';
 import { ItemInfo } from './../models/item-info.model';
 import { ActionItem } from '../models/action-item.model';
@@ -29,18 +30,17 @@ export class AddActionItemComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private actionItemService: ActionItemService
+    private router: Router,
+    private actionItemService: ActionItemService,
+    private retrospectiveService: RetrospectiveService
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.parent.data
-      .switchMap(parentData => {
-        this.retrospective = parentData.retrospective;
-        return this.activatedRoute.data;
-      }).
-      subscribe(
-        (data) => {
-          this.itemsInfo = [...data.retrospectiveActionItems];
+    this.activatedRoute.data
+      .subscribe(
+        ({retrospectiveData: data}) => {
+          this.retrospective = data.retrospective;
+          this.itemsInfo = [...data.items];
           this.categoryHashName = this.getCategoriesMapById(this.retrospective.categories);
           this.sortItemsByVote(this.itemsInfo);
           this.itemsInfo = this.itemsInfo.filter(item => item.totalVotes > 0);
@@ -100,5 +100,14 @@ export class AddActionItemComponent implements OnInit {
         (err) => console.log(err)
       );
     }
+  }
+
+  nextStep() {
+    this.retrospectiveService.goToNextStep(this.retrospective._id)
+      .subscribe(retrospective => {
+        if (retrospective) {
+          this.router.navigate([`retrospective/${this.retrospective._id}/report`]);
+        }
+      });
   }
 }

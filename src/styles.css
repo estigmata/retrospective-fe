@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
   margin: 0;
@@ -86,3 +85,25 @@ ul, li {
   width: 48px !important;
 }
 
+.cancelButton {
+  color: #0096a5 !important;
+}
+
+.menu-icon {
+  min-width: 0px !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.item-menu-icon {
+  background: #0096a5 !important;
+  color: white !important;
+}
+
+.accent-txt{
+  color: #0096a5 !important;
+}
+
+.over-accent-txt:hover{
+  color: #0096a5 !important;
+}

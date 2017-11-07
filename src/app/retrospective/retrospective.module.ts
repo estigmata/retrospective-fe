@@ -7,6 +7,7 @@ import {
   MdButtonModule,
   MdDialogModule,
   MdToolbarModule,
+  MdMenuModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
@@ -53,6 +54,7 @@ import { ReportComponent } from './report/report.component';
     MdIconModule,
     MdInputModule,
     MdButtonModule,
+    MdMenuModule,
     CommonModule,
     RouterModule,
     HttpClientModule,
@@ -73,7 +75,8 @@ import { ReportComponent } from './report/report.component';
     RetrospectiveComponent,
     ItemComponent,
     ConfirmDialogComponent,
-    ActionItemComponent
+    ActionItemComponent,
+    ReportComponent
   ],
   entryComponents: [ConfirmDialogComponent]
 })

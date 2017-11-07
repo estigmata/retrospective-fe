@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -9,6 +9,7 @@ import { RetrospectiveService } from '../services/retrospective.service';
 import { ItemService } from './../services/item.service';
 import { Retrospective } from '../../shared/models/retrospective.model';
 import { Item } from '../models/item.model';
+import { RetrospectiveData } from '../models/retrospective-data.model';
 import { Category } from './../models/category.model';
 import { State } from './../models/state.model';
 
@@ -30,32 +31,25 @@ export class AddItemComponent implements OnInit, OnDestroy {
   constructor(
     private retrospectiveService: RetrospectiveService,
     private itemService: ItemService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.
-      switchMap(param => {
-        return this.retrospectiveService.getRetrospective(param['id']);
-      }).
-      switchMap((retrospectiveResponse: Retrospective) => {
-        this.retrospective = retrospectiveResponse;
-        return this.itemService.getByRetrospective(retrospectiveResponse._id);
-      }).
-      takeUntil(this.ngUnsubscribe).
-      subscribe(
-        (items: Item[]) => {
-          this.categories = new Array();
-          this.retrospective.categories.forEach(category => {
-            const categoryItems = items.filter(item => item.category === category._id);
-            this.categories.push(new Category(
-              category._id,
-              category.name,
-              categoryItems
-            ));
-          });
-        },
-        (error: Error) => console.error('error :', error)
+    this.activatedRoute.data
+      .subscribe(({retrospectiveData: data}) => {
+        this.retrospective = data.retrospective;
+        this.categories = new Array();
+        this.retrospective.categories.forEach(category => {
+          const categoryItems = data.items.filter(item => item.category === category._id);
+          this.categories.push(new Category(
+            category._id,
+            category.name,
+            categoryItems
+          ));
+        });
+      },
+      (error: Error) => console.error('error :', error)
       );
   }
 
@@ -69,5 +63,14 @@ export class AddItemComponent implements OnInit, OnDestroy {
       category => category.items && category.items.length && category.items.some(
         item => !!item._id
     ));
+  }
+
+  nextStep() {
+    this.retrospectiveService.goToNextStep(this.retrospective._id)
+      .subscribe(retrospective => {
+        if (retrospective) {
+          this.router.navigate([`retrospective/${this.retrospective._id}/${retrospective.currentStep}`]);
+        }
+      });
   }
 }

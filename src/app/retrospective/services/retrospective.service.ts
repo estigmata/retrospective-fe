@@ -34,4 +34,16 @@ export class RetrospectiveService {
         }
       );
   }
+
+  goToNextStep (retrospectiveId: string): Observable<Retrospective> {
+    return this.http.put<RetrospectiveWrapper>(`${environment.backendPath}retrospectives/${retrospectiveId}/nextStep`, {})
+      .map(
+        (retrospective: RetrospectiveWrapper) => {
+          return retrospective.data;
+        },
+        (error) => {
+          this.handleError(error);
+        }
+      );
+  }
 }
