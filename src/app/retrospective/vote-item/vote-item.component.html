@@ -1,9 +1,10 @@
-<md-card fxFlex>
-  <h4>{{ 'VOTE-COMPONENT.VOTES-LABEL' | translate }}: {{maxRateControl}}</h4>
-</md-card>
+<h1>{{ 'VOTE-COMPONENT.VOTES-LABEL' | translate }}: {{maxRateControl}}</h1>
+<button md-icon-button color="accent" (click)="nextStep()" [disabled]="maxRateControl > 0">
+  <md-icon class="md-48">play_circle_filled</md-icon>
+</button>
 
 <div fxLayout.xs="column" >
-  <div fxLayout="row" fxFlex="95" fxLayout.xs="column" fxLayoutAlign="center" *ngIf="retrospective">
+  <div fxLayout="row" *ngIf="retrospective">
     <div class="block"*ngFor="let category of categories">
       <app-category
         [category]="category"
@@ -12,7 +13,4 @@
         (vote)="vote($event)"></app-category>
     </div>
   </div>
-  <button md-fab color="primary" (click)="nextStep()" [disabled]="maxRateControl > 0">
-    <md-icon class="md-18">play_circle_filled</md-icon>
-  </button>
 </div>

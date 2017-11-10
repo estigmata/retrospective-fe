@@ -51,10 +51,10 @@ export class ActionItemComponent implements OnInit, OnChanges {
     this.actionItem._id ?
     this.actionItemForm = this.formBuilder.group({
       'summary': [this.actionItem.summary, Validators.required]
-    }) : 
+    }) :
     this.actionItemForm = this.formBuilder.group({
-      'summary': ["", Validators.required]
-    }); 
+      'summary': ['', Validators.required]
+    });
     this.editMode = true;
   }
 }

@@ -41,7 +41,7 @@ export class VoteItemComponent implements OnInit {
           this.maxRateControl = this.retrospective.maxRate;
           this.categories = new Array();
           this.retrospective.categories.forEach(category => {
-            const categoryItems = data.items.filter(item => item.category === category._id);
+            const categoryItems = data.items.filter(item => item.category._id === category._id);
             this.categories.push(new Category(
               category._id,
               category.name,

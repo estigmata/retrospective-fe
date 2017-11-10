@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/map';
+import { Socket } from 'ng-socket-io';
 
 import { environment } from '../../../environments/environment';
 import { Item } from '../models/item.model';
@@ -15,8 +16,10 @@ import { RateObject } from '../models/rate-object.model';
 @Injectable()
 export class ItemService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(
+    private http: HttpClient,
+    private socket: Socket
+  ) { }
 
   private handleError(error: any) {
     const errMsg = (error.title) ? `${error.title} : ${error.description}`
@@ -78,4 +81,21 @@ export class ItemService {
       );
   }
 
+  createObservable(key: string) {
+    return this.socket
+      .fromEvent<any>(key)
+      .map(response => response.data);
+  }
+
+  listenItemsCreated(): Observable<Item> {
+    return this.createObservable('onItemSaved');
+  }
+
+  listenItemsUpdated(): Observable<Item> {
+    return this.createObservable('onUpdateItem');
+  }
+
+  listenItemsDeleted(): Observable<Item> {
+    return this.createObservable('onDeleteItem');
+  }
 }

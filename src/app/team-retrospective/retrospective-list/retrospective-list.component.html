@@ -1,10 +1,10 @@
 <div class="container" *ngIf="retrospectiveList">
   <table>
     <tr>
-      <th></th>
       <th>
         <h4>{{ 'RETROSPECTIVE.NAME-LABEL' | translate }}</h4>
       </th>
+      <th></th>
       <th>
         <h4>{{ 'RETROSPECTIVE.STATUS-LABEL' | translate }}</h4>
       </th>
@@ -15,20 +15,21 @@
         <h4>{{ 'RETROSPECTIVE.DESCRIPTION-LABEL' | translate }}</h4>
       </th>
     </tr>
-    <tr *ngFor="let retrospective of retrospectiveList; index as i;">
-      <td>{{i + 1}}</td>
+    <tr *ngFor="let retrospective of retrospectiveList;" class="table-row">
+      <td> <a routerLink="../../retrospective/{{retrospective._id}}/add-items">{{retrospective.name}}</a></td>
       <td>
-        <a routerLink="../../retrospective/{{retrospective._id}}/{{retrospective.currentStep}}" >
-          {{retrospective.name}}
-        </a>
+        <div *ngIf="retrospective.done">
+          <md-icon class="done md-18">done</md-icon>
+        </div>
+        <div *ngIf="!retrospective.done">
+          <md-icon class="in-progress md-18">schedule</md-icon>
+        </div>
       </td>
       <td>
         <div *ngIf="retrospective.done">
-          <md-icon class="done">done</md-icon>
           {{ 'RETROSPECTIVE.DONE' | translate }}
         </div>
         <div *ngIf="!retrospective.done">
-          <md-icon class="in-progress">schedule</md-icon>
           {{ 'RETROSPECTIVE.IN-PROGRESS' | translate }}
         </div>
       </td>

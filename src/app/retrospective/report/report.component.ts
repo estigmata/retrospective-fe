@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ActionItem } from './../models/action-item.model';
+import { RetrospectiveReport } from './../models/retrospective-report.model';
 import { ActionItemService } from './../services/action-item.service';
 import { Retrospective } from './../../shared/models/retrospective.model';
 import { RetrospectiveData } from './../models/retrospective-data.model';
+import { State } from './../models/state.model';
 
 @Component({
   selector: 'app-report-component',
@@ -14,8 +15,9 @@ import { RetrospectiveData } from './../models/retrospective-data.model';
 
 export class ReportComponent implements OnInit {
 
-  public actionItems;
+  public retrospectiveReport: RetrospectiveReport[];
   public retrospective: Retrospective;
+  public state = new State({report: true});
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,8 +31,11 @@ export class ReportComponent implements OnInit {
     this.activatedRoute.data
       .subscribe(
         ({retrospectiveData: data}) => {
-          console.log('Items, action?: ', data.items);
           this.retrospective = data.retrospective;
+          this.actionItemService.getActionItems(this.retrospective._id)
+            .subscribe(retrospectiveReport => {
+              this.retrospectiveReport = retrospectiveReport;
+            });
         },
         (error: Error) => console.error('error')
       );

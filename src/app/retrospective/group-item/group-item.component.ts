@@ -41,7 +41,7 @@ export class GroupItemComponent implements OnInit, OnDestroy {
         ({retrospectiveData: data}) => {
           this.retrospective = data.retrospective;
           this.categories = this.retrospective.categories.map(category => {
-            const categoryItems = data.items.filter(item => item.category === category._id);
+            const categoryItems = data.items.filter(item => item.category._id === category._id);
             return (new Category(
               category._id,
               category.name,

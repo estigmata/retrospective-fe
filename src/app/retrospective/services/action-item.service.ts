@@ -8,8 +8,9 @@ import 'rxjs/add/operator/map';
 
 import { environment } from '../../../environments/environment';
 import { ActionItemWrapper } from './../models/action-item-wrapper.model';
-import { ActionItemsWrapper } from './../models/action-items-wrapper.model';
+import { RetrospectiveReportWrapper } from './../models/retrospective-report-wrapper.model';
 import { ActionItem } from './../models/action-item.model';
+import { RetrospectiveReport } from './../models/retrospective-report.model';
 
 @Injectable()
 export class ActionItemService {
@@ -31,11 +32,11 @@ export class ActionItemService {
       );
   }
 
-  getActionItems(retrospectiveId: string): Observable<ActionItem[]> {
-    const params = new HttpParams().set('retrospective', retrospectiveId);
-    return this.http.get<ActionItemsWrapper>(`${environment.backendPath}action-items`, {params: params})
+  getActionItems(retrospectiveId: string): Observable<RetrospectiveReport[]> {
+    const params = new HttpParams().set('retrospectiveId', retrospectiveId);
+    return this.http.get<RetrospectiveReportWrapper>(`${environment.backendPath}action-items`, {params: params})
       .map(
-        (items: ActionItemsWrapper) => items.data,
+        (items) => items.data,
         (error) => this.handleError(error)
       );
   }

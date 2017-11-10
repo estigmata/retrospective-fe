@@ -3,6 +3,7 @@ export class State {
   vote?: Boolean;
   addAction?: Boolean;
   group?: Boolean;
+  report?: Boolean;
 
   constructor(params: State) {
     Object.assign(this, params);

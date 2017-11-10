@@ -1,10 +1,13 @@
 <h1>{{ 'ACTION-ITEM.TITLE' | translate }}</h1>
+<button md-icon-button color="accent" (click)="nextStep()">
+  <md-icon class="md-48">play_circle_filled</md-icon>
+</button>
 
 <div class="button-row">
-  <button md-fab color="primary" (click)="getPreviewItem()" [disabled]="itemIndex === 0">
+  <button md-fab color="accent" (click)="getPreviewItem()" [disabled]="itemIndex === 0">
     <md-icon>keyboard_arrow_left</md-icon>
   </button>
-  <button md-fab color="primary" (click)="getNextItem()" [disabled]="itemIndex === this.itemsInfo.length - 1">
+  <button md-fab color="accent" (click)="getNextItem()" [disabled]="itemIndex === this.itemsInfo.length - 1">
     <md-icon>keyboard_arrow_right</md-icon>
   </button>
 </div>
@@ -13,11 +16,9 @@
   <div fxLayout="row" fxLayout.xs="column">
     <div class="block" fxFlex>
       <app-item
-        Quie pasoles moles
         [item]="itemSelected"
         [state]="state">
       </app-item>
-
     </div>
 
     <div class="block container category" fxFlex>
@@ -26,9 +27,6 @@
         (modified)="onActionItemModified($event)">
       </app-action-item>
     </div>
-
-    <button md-fab color="primary" (click)="nextStep()">
-      <md-icon class="md-18">play_circle_filled</md-icon>
-    </button>
   </div>
+
 </div>

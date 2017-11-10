@@ -1,7 +1,8 @@
 {
   "APP-COMPONENT" :
   {
-    "TITTLE": "Retrospectiva"
+    "TITTLE-WHITE": "Retrospective",
+    "TITTLE-CYAN": "Tool"
   },
   "LANGUAGE" :
   {
@@ -47,5 +48,9 @@
   {
     "ACCEPT": "Aceptar",
     "CANCEL": "Cancelar"
+  },
+  "REPORT":
+  {
+    "TITLE": "Reporte de Retrospectiva"
   }
 }

@@ -1,8 +1,10 @@
 import { Component, AfterViewInit, OnInit, Input, Output, ViewChild, EventEmitter, Inject, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MdFormFieldModule, MdDialog } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 import { Item } from '../models/item.model';
+import { User } from './../../shared/models/user.model';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -16,20 +18,24 @@ export class ItemComponent implements OnInit {
   @Output() deleted = new EventEmitter<void>();
   @Output() vote = new EventEmitter<boolean>();
   @Input() state;
-  
+
   public editMode;
   public itemForm: FormGroup;
+  public currentUser: User;
 
   constructor(
     private formBuilder: FormBuilder,
-    public dialog: MdDialog ) {
+    private activatedRoute: ActivatedRoute,
+    public dialog: MdDialog) {
     this.itemForm = this.formBuilder.group({
       'summary': [null, Validators.required]
     });
   }
 
   ngOnInit() {
-    this.editMode = !this.item.summary;
+    this.activatedRoute.parent.data
+      .subscribe(data => this.currentUser = data.userData);
+    this.editMode = !this.item.summary && this.item.user === this.currentUser._id;
   }
 
   save(newItemValue) {

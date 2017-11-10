@@ -4,20 +4,36 @@ table {
 }
 
 th, td {
-  padding: 6px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 4px;
+  padding-right: 4px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
 }
 
 .done {
-  color: #3f51b5;
+  color: #4BB40E;
 }
 
 .in-progress {
-  color: #b4c300;
+  color: #F1CE30;
 }
 
 a {
   color: black;
   text-decoration: none;
+}
+
+.table-row {
+  border-radius: 4px;
+  box-shadow: 0 0 8px silver;
+  width: 40%;
+}
+
+.table-row:hover {
+  box-shadow: 0 0 10px #0096a5;
+}
+
+.table-data {
+  padding: 2px 16px;
 }

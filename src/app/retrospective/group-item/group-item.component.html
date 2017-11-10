@@ -1,10 +1,12 @@
-<div fxLayout.xs="column" >
-  <div fxLayout="row"  fxFlex="95" fxLayout.xs="column" fxLayoutAlign="center" *ngIf="retrospective">
+<h1>Group Items</h1>
+<button md-icon-button color="accent" (click)="nextStep()" [disabled]="!isAtLeastOneExistingItem()">
+  <md-icon class="md-48">play_circle_filled</md-icon>
+</button>
+
+<div>
+  <div fxLayout="row" *ngIf="retrospective">
     <div class="block" *ngFor="let category of categories">
       <app-category [category]="category" [retrospectiveId]="retrospective._id" [state]="state"></app-category>
     </div>
   </div>
-  <button md-fab color="primary" (click)="nextStep()" [disabled]="!isAtLeastOneExistingItem()">
-    <md-icon class="md-18">play_circle_filled</md-icon>
-  </button>
 </div>

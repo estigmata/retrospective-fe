@@ -5,3 +5,12 @@
 .like-icon {
   padding-top: 10px;
 }
+
+.tag {
+  display: inline-block;
+  padding: 5px;
+  border-radius: 10px;
+  width: auto;
+  background: #0277bd;
+  color: white;
+}

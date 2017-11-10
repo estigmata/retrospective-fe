@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { DndModule } from 'ng2-dnd';
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 
 import { RetrospectiveRoutingModule } from './retrospective-routing.module';
 import { RetrospectiveComponent } from './retrospective.component';
@@ -32,6 +33,10 @@ import { ItemResolverService } from './resolvers/item/item-resolver.service';
 import { ActionItemService } from './services/action-item.service';
 import { GroupItemComponent } from './group-item/group-item.component';
 import { ReportComponent } from './report/report.component';
+import { environment } from './../../environments/environment';
+import { UserResolverService } from './resolvers/user/user-resolver.service';
+
+const config: SocketIoConfig = { url: environment.backendPath, options: {} };
 
 @NgModule({
   declarations: [
@@ -62,14 +67,16 @@ import { ReportComponent } from './report/report.component';
     ReactiveFormsModule,
     TranslateModule,
     MdDialogModule,
-    DndModule
+    DndModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     RetrospectiveService,
     ItemService,
     RetrospectiveResolverService,
     ItemResolverService,
-    ActionItemService
+    ActionItemService,
+    UserResolverService
   ],
   exports: [
     RetrospectiveComponent,

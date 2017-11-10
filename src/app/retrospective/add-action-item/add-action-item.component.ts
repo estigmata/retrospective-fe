@@ -106,7 +106,7 @@ export class AddActionItemComponent implements OnInit {
     this.retrospectiveService.goToNextStep(this.retrospective._id)
       .subscribe(retrospective => {
         if (retrospective) {
-          this.router.navigate([`retrospective/${this.retrospective._id}/report`]);
+          this.router.navigate([`retrospective/${this.retrospective._id}/${retrospective.currentStep}`]);
         }
       });
   }

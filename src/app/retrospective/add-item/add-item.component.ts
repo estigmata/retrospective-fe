@@ -36,12 +36,39 @@ export class AddItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.itemService.listenItemsCreated().
+    subscribe(itemCreated => {
+      const categoryFound = this.categories.find(category => category._id ===  itemCreated.category);
+      if (!categoryFound.items.some(item => item._id === itemCreated._id)) {
+        categoryFound.items.unshift(itemCreated);
+      }
+    });
+
+    this.itemService.listenItemsUpdated().
+      subscribe(itemUpdated => {
+        const categoryFound = this.categories.find(category => category._id ===  itemUpdated.category);
+        const itemFound = categoryFound.items.find(item => item._id === itemUpdated._id);
+        if (!!itemFound) {
+          Object.assign(itemFound, itemUpdated);
+        }
+      });
+
+    this.itemService.listenItemsDeleted().
+      subscribe(itemUpdated => {
+        const categoryFound = this.categories.find(category => category._id ===  itemUpdated.category);
+        const itemFound = categoryFound.items.find(item => item._id === itemUpdated._id);
+        if (!!itemFound) {
+          const itemIndex = categoryFound.items.indexOf(itemFound);
+          categoryFound.items.splice(itemIndex, 1);
+        }
+      });
+
     this.activatedRoute.data
       .subscribe(({retrospectiveData: data}) => {
         this.retrospective = data.retrospective;
         this.categories = new Array();
         this.retrospective.categories.forEach(category => {
-          const categoryItems = data.items.filter(item => item.category === category._id);
+          const categoryItems = data.items.filter(item => item.category._id === category._id);
           this.categories.push(new Category(
             category._id,
             category.name,
