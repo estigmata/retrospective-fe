@@ -1,32 +1,41 @@
-<h1>{{ 'ACTION-ITEM.TITLE' | translate }}</h1>
-<button md-icon-button color="accent" (click)="nextStep()">
-  <md-icon class="md-48">play_circle_filled</md-icon>
-</button>
 
-<div class="button-row">
-  <button md-fab color="accent" (click)="getPreviewItem()" [disabled]="itemIndex === 0">
-    <md-icon>keyboard_arrow_left</md-icon>
+<h1>
+  {{ 'ACTION-ITEM.TITLE' | translate }}
+  <button md-icon-button color="accent" (click)="nextStep()" *ngIf="userIsModerator">
+    <md-icon class="md-48">play_circle_filled</md-icon>
   </button>
-  <button md-fab color="accent" (click)="getNextItem()" [disabled]="itemIndex === this.itemsInfo.length - 1">
-    <md-icon>keyboard_arrow_right</md-icon>
-  </button>
+</h1>
+
+
+<div class="action-item-flow">
+  <div class="action-item-flow-container">
+    <button md-fab color="accent" align-content:center (click)="getPreviewItem()" [disabled]="itemIndex === 0">
+      <md-icon>keyboard_arrow_left</md-icon>
+    </button>
+    <button md-fab color="accent" (click)="getNextItem()" [disabled]="itemIndex === this.itemsInfo.length - 1">
+      <md-icon>keyboard_arrow_right</md-icon>
+    </button>
+  </div>
 </div>
 
-<div *ngIf="itemSelected">
-  <div fxLayout="row" fxLayout.xs="column">
-    <div class="block" fxFlex>
-      <app-item
-        [item]="itemSelected"
-        [state]="state">
-      </app-item>
-    </div>
-
-    <div class="block container category" fxFlex>
-      <app-action-item
-        [actionItem]="actionItemSelected"
-        (modified)="onActionItemModified($event)">
-      </app-action-item>
+  <div *ngIf="itemSelected">
+    <div fxLayout="row" fxLayout.xs="column">
+      <div fxFlex="50" fxFlex.xs="100" class="block" >
+        <app-item
+          [item]="itemSelected"
+          [state]="state">
+        </app-item>
+      </div>
+  
+      <div fxFlex="50" fxFlex.xs="100" class="block container category" >
+        <app-action-item
+          class="action-item"
+          [actionItem]="actionItemSelected"
+          (modified)="onActionItemModified($event)"
+          [currentUser]="currentUser"
+          >
+        </app-action-item>
+      </div>
     </div>
   </div>
 
-</div>

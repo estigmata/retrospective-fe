@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'team/retrospective-list',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -14,6 +14,14 @@ const routes: Routes = [
   {
     path: 'team',
     loadChildren: 'app/team-retrospective/team-retrospective.module#TeamRetrospectiveModule'
+  },
+  {
+    path: 'login',
+    loadChildren: 'app/login/login.module#LoginModule'
+  },
+  {
+    path: 'sign-up',
+    loadChildren: 'app/sign-up/sign-up.module#SignUpModule'
   }
 ];
 

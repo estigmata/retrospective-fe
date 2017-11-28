@@ -1,3 +1,4 @@
+import { UserColor } from './user-color.model';
 export class Retrospective {
   _id?: string;
   name?: string;
@@ -11,6 +12,8 @@ export class Retrospective {
   creationDate?: Date;
   done?: boolean;
   currentStep?: string;
+  users?: [ UserColor ];
+  team?: string;
 
   constructor(params: Retrospective) {
     Object.assign(this, params);

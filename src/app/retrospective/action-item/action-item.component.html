@@ -1,9 +1,10 @@
 <div *ngIf="editMode">
   <form [formGroup]="actionItemForm" (ngSubmit)="save(actionItemForm.value)">
     <md-card>
-      <md-card-content>
-        <md-form-field class="full-width" >
+      <md-card-content *ngIf="currentUser.role === 'moderator'; else isGuest">
+        <md-form-field class="full-width">
           <textarea
+            appSummaryFocus
             mdInput
             placeholder="{{ 'ACTION-ITEM.TEXTAREA-PLACEHOLDER' | translate }}"
             formControlName="summary"
@@ -13,7 +14,12 @@
           </textarea>
         </md-form-field>
       </md-card-content>
-      <md-card-actions align="end">
+      <ng-template #isGuest>
+        <md-card-content>
+          {{ "ACTION-ITEM.SUMMARY" | translate }}
+        </md-card-content>
+      </ng-template>
+      <md-card-actions align="end" *ngIf="currentUser.role === 'moderator'">
         <button md-raised-button type="button" class="cancelButton" (click)="onClean()">
           <span>{{ "BUTTONS.CANCEL" | translate }}</span>
         </button>
@@ -25,14 +31,17 @@
   </form>
 </div>
 <div *ngIf="!editMode">
-  <md-card>
-    <md-card-actions align="end">
-      <button md-icon-button class="item-menu-icon" (click)="openEditMode()" >
-        <md-icon class="md-18">edit</md-icon>
-      </button>
-    </md-card-actions>
-    <md-card-content>
+  <md-card fxLayout="row" class="action-item">
+    <md-card-content fxFlex="95" class="adjust-text">
       {{actionItem.summary}}
     </md-card-content>
+    <div fxFlex="5" align="end" *ngIf="currentUser.role === 'moderator'">
+      <md-icon [mdMenuTriggerFor]="groupMenu">more_vert</md-icon>
+      <md-menu class="menu-icon" #groupMenu="mdMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+        <a md-icon-button class="item-menu-icon" (click)="openEditMode()" >       
+          <md-icon class="md-18 circular-btn-with-icon">edit</md-icon>        
+        </a>
+      </md-menu>
+    </div>
   </md-card>
 </div>

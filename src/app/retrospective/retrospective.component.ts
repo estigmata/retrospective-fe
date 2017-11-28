@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
 
 import { RetrospectiveService } from './services/retrospective.service';
 import { Retrospective } from '../shared/models/retrospective.model';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MdDialog } from '@angular/material';
 
 @Component({
   selector: 'app-retrospective',
@@ -19,13 +21,30 @@ export class RetrospectiveComponent implements OnInit {
 
   constructor(
     private retrospectiveService: RetrospectiveService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    public dialog: MdDialog
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.children[0].data
-    .subscribe(({retrospectiveData: data}) => {
-        this.retrospective = data.retrospective;
+    this.retrospectiveService.listenRetrospectiveUpdated()
+      .subscribe(retrospectiveUpdated => {
+        this.router.navigate([`retrospective/${retrospectiveUpdated._id}/${retrospectiveUpdated.currentStep}`]);
       });
+
+    this.retrospectiveService.listenSentMessageToRetrospective()
+      .subscribe(messageResponse => {
+        console.log('On add item service.');
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '300px',
+          data: {
+            message: messageResponse.message,
+            type: 'receiveMessage'
+          }
+        });
+      });
+
+    this.activatedRoute.children[0].data
+      .subscribe(({retrospectiveData: data}) => this.retrospective = data.retrospective);
   }
 }

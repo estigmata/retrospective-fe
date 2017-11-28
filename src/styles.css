@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('../node_modules/ng2-dnd/style.css');
 
 
 html, body, material-app, md-sidenav-container {
@@ -113,4 +114,91 @@ ul, li {
 
 .over-accent-txt:hover{
   color: #0096a5 !important;
+}
+
+.circular-btn-with-icon {
+  padding-bottom: 8px;
+}
+
+.user-profile {
+  margin: 0px 4px;
+}
+
+.slider-text {
+  color: #0097a7;
+}
+
+.slider-full-with {
+  width: 100%;
+}
+
+.adjust-text {
+  word-wrap: break-word;
+}
+
+.dnd-drag-over {
+  background-color: rgba(96, 125, 139, 0.43) !important;
+  border: 1px solid rgba(0, 0, 0, 0.17)  !important;
+}
+
+.dnd-drag-start {
+  border: 1px solid rgb(0, 0, 0)  !important;
+}
+
+.drag-item {
+  min-height: 50px !important;
+}
+
+.action-item {
+  height: 100%;
+}
+
+.action-item > div:first-child {
+  height: 100%;
+}
+
+.action-item-content > div:first-child {
+  margin-top: 3px;
+}
+
+.action-item-container {
+  background-color: #efebe9;
+}
+
+.action-item-category-vote {
+  background-color: rgb(153, 153, 153);
+  color: rgb(255, 255, 255);
+}
+
+.action-item-category-tag {
+  padding: 5px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.54);
+  color: white;
+  font-size: 14px;
+}
+
+.action-item-vote-tag {
+  padding: 5px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.54);
+  color: white;
+  font-size: 14px;
+  float:right;
+}
+
+.action-item-category-tag .title-tag {
+  font-weight: bold;
+}
+
+.action-item-vote-tag .title-tag {
+  font-weight: bold;
+}
+
+.action-item-flow {
+  display: flex;
+}
+
+.action-item-flow-container{
+  margin: 0 auto;
 }

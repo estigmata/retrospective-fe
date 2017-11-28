@@ -1,4 +1,12 @@
 <div class="container" *ngIf="retrospective">
-  <h3>.:{{retrospective.name}}:.</h3>
+  <div fxLayout="row">
+    <h3>.:{{retrospective.name}}:.</h3>
+    <span class="space"></span>
+    <div class="user-profile" mdTooltip="{{user.userId.name}}" *ngFor="let user of retrospective.users">
+      <button md-fab [ngStyle]="{'background': 'hsl('+user.color.h+','+user.color.s+'%,'+user.color.l+'%)'}">
+        <md-icon>person</md-icon>
+      </button>
+    </div>
+  </div>
   <router-outlet></router-outlet>
 </div>

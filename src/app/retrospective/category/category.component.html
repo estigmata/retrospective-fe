@@ -1,4 +1,4 @@
-<div class="container"  fxFlex="500px">
+<div class="container"  fxFlex="470px">
   <md-card class="category">
     <md-card-header>
       <md-card-title><h4>{{category.name}}</h4></md-card-title>
@@ -8,18 +8,36 @@
         <md-icon class="md-36">add_circle</md-icon>
       </button>
     </md-card-actions>
-    <md-card-content >
-      <div *ngFor= "let item of items; let i = index" dnd-draggable [dragEnabled]="!item.children.length && state.group" [dragData]="item">
-        <app-item
-          [item]="item"
-          [state]="state"
-          (modified)="onItemModified($event)"
-          (deleted)="onItemDeleted(i)"
-          (vote)="voteItem($event, i)"
+    <md-card-content>
+      <div
+        class="panel panel-default"
+        *ngFor= "let item of items; let i = index"
+        dnd-draggable
+        [dragEnabled]="!item.children.length && state.group && currentUser.role === 'moderator'"
+        [dragData]="{item: item, index: i, belong: items}"
+        [dropZones]="['item']">
+        <div
           dnd-droppable
           [dropEnabled]="state.group"
-          (onDropSuccess)="onGroup($event, item)"></app-item>
-      </div>  
+          [dropZones]="['item']"
+          (onDropSuccess)="onGroup($event, item)">
+          <app-item
+            [item]="item"
+            [state]="state"
+            (modified)="onItemModified($event)"
+            (deleted)="onItemDeleted(i)"
+            (ungroup)="onUngroup(i)"
+            (vote)="voteItem($event, i)"
+            [currentUser]="currentUser"
+            ></app-item>
+        </div>
+      </div>
     </md-card-content>
+    <div class="drag-item"
+    dnd-droppable
+    [dropEnabled]="state.group"
+    (onDropSuccess)="onUnGroup($event)"
+    [dropZones]="['category']">
+    </div>
   </md-card>
 </div>

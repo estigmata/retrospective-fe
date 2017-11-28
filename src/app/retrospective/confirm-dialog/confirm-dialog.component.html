@@ -1,12 +1,53 @@
-<h1 md-dialog-title> {{ 'DELETE.MESSAGE' | translate }}</h1>
-<div md-dialog-content>
-    {{data.title}}?
+<div *ngIf="data.type === 'receiveMessage', else broadcastMessage">
+  <h1 md-dialog-title>{{ 'TEXT.WARNING-MESSAGE' | translate }}</h1>
+  <div md-dialog-content>
+    <p *ngIf="data.message">{{ data.message }}</p>
+  </div>
+  <div md-dialog-actions align="end">
+    <button md-raised-button tabindex="-1" (click)="onYesClick()" color="accent">
+      <span>{{ "BUTTONS.ACCEPT" | translate }}</span>
+    </button>
+  </div>
 </div>
-<div md-dialog-actions align="end">
-  <button md-raised-button class="cancelButton" tabindex="-1" (click)="onNoClick()">
-    <span>{{ "BUTTONS.CANCEL" | translate }}</span>
-  </button>
-  <button md-raised-button [md-dialog-close]="" tabindex="1" (click)="onYesClick()" color="accent">
-    <span>{{ "BUTTONS.ACCEPT" | translate }}</span>
-  </button>
-</div>
+<ng-template #broadcastMessage>
+  <div *ngIf="data.type === 'broadcastMessage', else deleteItem">
+    <h1 md-dialog-title>{{ 'TEXT.WARNING-MESSAGE' | translate }}</h1>
+    <div md-dialog-content>
+      <p>{{ 'TEXT.SEND-MESSAGE' | translate }} <b class="slider-text">{{ sliderTime }} {{ 'TEXT.TIME' | translate }}</b>.</p>
+      <section>
+        <md-slider
+          class="slider-full-with"
+          max="5"
+          min="3"
+          step="1"
+          thumb-label="true"
+          tick-interval="1"
+          [(ngModel)]="sliderTime">
+        </md-slider>
+      </section>
+    </div>
+    <div md-dialog-actions align="end">
+      <button md-raised-button class="cancelButton" tabindex="-1" (click)="onNoClick()">
+        <span>{{ "BUTTONS.CANCEL" | translate }}</span>
+      </button>
+      <button md-raised-button [md-dialog-close]="" tabindex="1" (click)="sendMessage()" color="accent">
+        <span>{{ "BUTTONS.SEND" | translate }}</span>
+      </button>
+    </div>
+  </div>
+  <ng-template #deleteItem>
+    <h1 md-dialog-title> {{ 'DELETE.MESSAGE' | translate }}</h1>
+    <div md-dialog-content>
+        {{data.title}}?
+    </div>
+    <div md-dialog-actions align="end">
+      <button md-raised-button class="cancelButton" tabindex="-1" (click)="onNoClick()">
+        <span>{{ "BUTTONS.CANCEL" | translate }}</span>
+      </button>
+      <button md-raised-button [md-dialog-close]="" tabindex="1" (click)="onYesClick()" color="accent">
+        <span>{{ "BUTTONS.ACCEPT" | translate }}</span>
+      </button>
+    </div>
+  </ng-template>
+</ng-template>
+

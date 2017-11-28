@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Item } from '../models/item.model';
@@ -15,22 +14,18 @@ import { User } from './../../shared/models/user.model';
 export class CategoryComponent implements OnInit {
   @Input() category;
   @Input() retrospectiveId;
-  @Input () state;
+  @Input() state;
+  @Input() currentUser;
   @Output() vote = new EventEmitter<Object>();
 
   public items: Item[] = [];
-  public currentUser: User;
 
   constructor (
     private itemService: ItemService,
-    private translateService: TranslateService,
-    private activatedRoute: ActivatedRoute
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.parent.data
-      .subscribe(data => this.currentUser = data.userData);
-
     if (this.category) {
       this.items = this.category.items;
     }
@@ -51,13 +46,11 @@ export class CategoryComponent implements OnInit {
   }
 
   onItemModified(newItem: Item) {
+    newItem.user = this.currentUser._id;
     if (!newItem._id) {
-      const itemFound = this.items.find(item => !item._id);
-      const itemIndex = this.items.indexOf(itemFound);
-      this.items.splice(itemIndex, 1);
       this.itemService.save(newItem).subscribe(
         (itemSaved: Item) => {},
-        (err) => this.items.shift()
+        (err) => console.error(err)
       );
     } else {
       this.itemService.update(newItem._id, newItem).subscribe(
@@ -68,14 +61,22 @@ export class CategoryComponent implements OnInit {
   }
 
   onItemDeleted(index) {
-    if (!this.items[index]._id) {
-      this.items.splice(index, 1);
-    } else {
-      this.itemService.delete(this.items[index]._id).subscribe(
-        () => {},
-        (err) => console.error(err)
-      );
-    }
+    this.itemService.delete(this.items[index]._id).subscribe(
+      () => {},
+      (err) => console.error(err)
+    );
+  }
+
+  onUngroup(index) {
+    this.items[index].children.map(child => {
+      child.parent = true;
+      this.onItemModified(child);
+    });
+    this.itemService.delete(this.items[index]._id).subscribe(
+      () => {},
+      (err) => console.error(err)
+    );
+    this.items[index].parent = false;
   }
 
   voteItem(isIncrement, index) {
@@ -84,32 +85,59 @@ export class CategoryComponent implements OnInit {
   }
 
   onGroup(foreingItem: any, localItem: Item) {
-    if (foreingItem.dragData._id !== localItem._id) {
+    if (foreingItem.dragData.belong.parent) {
+      if (foreingItem.dragData.belong.children.length > 2 ) {
+        foreingItem.dragData.belong.children.splice(foreingItem.dragData.index, 1);
+        this.onItemModified(foreingItem.dragData.belong);
+      } else {
+        foreingItem.dragData.belong.children[0].parent = true;
+        foreingItem.dragData.belong.children[1].parent = true;
+        this.onItemModified(foreingItem.dragData.belong.children[0]);
+        this.onItemModified(foreingItem.dragData.belong.children[1]);
+        this.itemService.delete(foreingItem.dragData.belong._id)
+          .subscribe(() => {}, (err) => console.log(err));
+      }
+    }
+    if (foreingItem.dragData.item._id !== localItem._id) {
       if (!localItem.children.length) {
         const newItem = new Item({
           retrospective: localItem.retrospective,
           category: localItem.category,
-          children: [ localItem, foreingItem.dragData],
+          children: [ localItem, foreingItem.dragData.item],
           parent: true,
           user: this.currentUser._id
         });
         this.translateService.get('ITEM.GROUP-ITEM').subscribe(
           value => newItem.summary = value
         );
-        foreingItem.dragData.parent = false;
+        foreingItem.dragData.item.parent = false;
         localItem.parent = false;
-        this.onItemModified(localItem);
-        this.onItemModified(foreingItem.dragData);
         this.onItemModified(newItem);
-        this.items.splice(this.items.findIndex(someItem => {
-          return someItem._id === localItem._id;
-        }) + 1, 0, newItem);
+        this.onItemModified(localItem);
+        this.onItemModified(foreingItem.dragData.item);
       } else {
-        foreingItem.dragData.parent = false;
-        localItem.children.push(foreingItem.dragData);
-        this.onItemModified(foreingItem.dragData);
+        foreingItem.dragData.item.parent = false;
+        localItem.children.push(foreingItem.dragData.item);
+        this.onItemModified(foreingItem.dragData.item);
         this.onItemModified(localItem);
       }
+    }
+  }
+
+  onUnGroup(foreingItem: any) {
+    if (foreingItem.dragData.belong.children.length > 2) {
+      foreingItem.dragData.belong.children.splice(foreingItem.dragData.index, 1);
+      this.onItemModified(foreingItem.dragData.belong);
+      foreingItem.dragData.item.parent = true;
+      this.onItemModified(foreingItem.dragData.item);
+    } else {
+      foreingItem.dragData.belong.children[0].parent = true;
+      foreingItem.dragData.belong.children[1].parent = true;
+      this.onItemModified(foreingItem.dragData.belong.children[0]);
+      this.onItemModified(foreingItem.dragData.belong.children[1]);
+      this.itemService.delete(foreingItem.dragData.belong._id)
+        .subscribe(() => {}, (err) => console.log(err));
+      foreingItem.dragData.belong.parent = false;
     }
   }
 

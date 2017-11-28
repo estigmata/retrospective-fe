@@ -19,6 +19,7 @@ import { DndModule } from 'ng2-dnd';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserService } from './shared/services/user.service';
+import { TeamService } from './shared/services/team.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -51,7 +52,10 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     DndModule.forRoot()
   ],
-  providers: [ UserService ],
+  providers: [
+    UserService,
+    TeamService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

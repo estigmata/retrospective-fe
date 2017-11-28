@@ -14,16 +14,22 @@
     "TEXTAREA-PLACEHOLDER": "Write your comment",
     "GROUP-ITEM": "Unnamed group",
     "CATEGORY": "Category:",
-    "VOTES": "Votes:"
+    "VOTES": "Votes:",
+    "IS-TYPING": "is typing..."
   },
   "ACTION-ITEM" :
   {
     "TITLE": "Action item",
-    "TEXTAREA-PLACEHOLDER": "Write the action item"
+    "TEXTAREA-PLACEHOLDER": "Write the action item",
+    "SUMMARY": "Without action item..."
   },
   "DELETE" :
   {
-    "MESSAGE" : "Do you want delete the item"
+    "MESSAGE" : "Do you want delete"
+  },
+  "UNGROUP" :
+  {
+    "MESSAGE" : "Do you want ungroup"
   },
   "VOTE-COMPONENT":
   {
@@ -47,10 +53,36 @@
   "BUTTONS":
   {
     "ACCEPT": "Accept",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "SEND": "Send"
   },
   "REPORT":
   {
     "TITLE": "Retrospective Report"
+  },
+  "CREATE-TEAM":
+  {
+    "BUTTON-LABEL": "Teams",
+    "LAUNCH-LABEL": "Create new Team",
+    "TEAM-NAME": "Team Name"
+  },
+  "LOGIN":
+  {
+    "TITTLE": "Login with your account",
+    "NAME-LABEL": "Enter your Name",
+    "PASSWORD-LABEL": "Enter your password"
+  },
+  "SIGN-UP":
+  {
+    "TITTLE": "Create new account",
+    "NAME-LABEL": "Enter your Name",
+    "PASSWORD-LABEL": "Enter your password",
+    "RE-PASSWORD-LABEL": "Confim your password"
+  },
+  "TEXT":
+  {
+    "SEND-MESSAGE" : "Message: It will change to the next step in",
+    "TIME" : "minutes",
+    "WARNING-MESSAGE": "Warning message"
   }
 }

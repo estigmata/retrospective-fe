@@ -16,7 +16,7 @@
       </th>
     </tr>
     <tr *ngFor="let retrospective of retrospectiveList;" class="table-row">
-      <td> <a routerLink="../../retrospective/{{retrospective._id}}/add-items">{{retrospective.name}}</a></td>
+      <td> <a routerLink="../../../retrospective/{{retrospective._id}}/add-items">{{retrospective.name}}</a></td>
       <td>
         <div *ngIf="retrospective.done">
           <md-icon class="done md-18">done</md-icon>

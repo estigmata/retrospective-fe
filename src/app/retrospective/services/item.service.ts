@@ -36,7 +36,7 @@ export class ItemService {
       );
   }
 
-  getItemsWithRatesByUser(retrospectiveId: string, userId = '1'): Observable<Item[]> {
+  getItemsWithRatesByUser(retrospectiveId: string, userId = localStorage.getItem('userId')): Observable<Item[]> {
     let params = new HttpParams();
 
     params = params.append('retrospectiveId', retrospectiveId);
@@ -73,7 +73,7 @@ export class ItemService {
   }
 
   vote(itemId: String, itemRate: RateObject): Observable<Item> {
-    itemRate.userId = '1';
+    itemRate.userId = localStorage.getItem('userId');
     return this.http.put<ItemWrapper>(`${environment.backendPath}items/${itemId}/rates`, itemRate).
       map(
         (itemUpdated: ItemWrapper) => itemUpdated.data,
@@ -97,5 +97,12 @@ export class ItemService {
 
   listenItemsDeleted(): Observable<Item> {
     return this.createObservable('onDeleteItem');
+  }
+
+  listenItemsGroupCreated(): Observable<Item> {
+    return this.createObservable('onGroupSaved');
+  }
+  listenItemsGroupUpdated(): Observable<Item> {
+    return this.createObservable('onGroupUpdated');
   }
 }

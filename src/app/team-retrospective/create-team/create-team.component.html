@@ -1,0 +1,21 @@
+<div class="container">
+  <form [formGroup]="createTeamForm" (ngSubmit)="save(createTeamForm.value)">
+    <md-card>
+      <md-card-header>
+        <md-card-title>
+          <span class="text-holder">
+            {{ 'CREATE-TEAM.LAUNCH-LABEL' | translate }}
+          </span>
+        </md-card-title>
+      </md-card-header>
+      <md-card-content>
+        <md-form-field class="full-width">
+          <input mdInput placeholder="{{ 'CREATE-TEAM.TEAM-NAME' | translate }}" formControlName="name">
+        </md-form-field>
+        <button md-icon-button type="submit" color="accent">
+          <md-icon class="md-48">play_circle_filled</md-icon>
+        </button>
+      </md-card-content>
+    </md-card>
+  </form>
+</div>

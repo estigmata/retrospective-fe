@@ -1,12 +1,19 @@
-<h1>Group Items</h1>
-<button md-icon-button color="accent" (click)="nextStep()" [disabled]="!isAtLeastOneExistingItem()">
-  <md-icon class="md-48">play_circle_filled</md-icon>
-</button>
+<h1>
+  Group Items
+  <button md-icon-button color="accent" (click)="nextStep()" [disabled]="!isAtLeastOneExistingItem()" *ngIf="userIsModerator">
+    <md-icon class="md-48">play_circle_filled</md-icon>
+  </button>
+</h1>
 
 <div>
   <div fxLayout="row" *ngIf="retrospective">
     <div class="block" *ngFor="let category of categories">
-      <app-category [category]="category" [retrospectiveId]="retrospective._id" [state]="state"></app-category>
+      <app-category
+        [category]="category"
+        [retrospectiveId]="retrospective._id"
+        [state]="state"
+        [currentUser]="currentUser">
+      </app-category>
     </div>
   </div>
 </div>

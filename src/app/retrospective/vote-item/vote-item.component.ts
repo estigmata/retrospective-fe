@@ -11,6 +11,9 @@ import { ItemService } from '../services/item.service';
 import { Item } from '../models/item.model';
 import { Category } from '../models/category.model';
 import { RateObject } from './../models/rate-object.model';
+import { UserService } from '../../shared/services/user.service';
+import { ConfirmDialogComponent } from './../confirm-dialog/confirm-dialog.component';
+import { MdDialog } from '@angular/material';
 
 @Component({
   selector: 'app-vote-item',
@@ -19,6 +22,8 @@ import { RateObject } from './../models/rate-object.model';
 })
 
 export class VoteItemComponent implements OnInit {
+
+  userIsModerator: boolean = this.userService.checkRole('moderator');
 
   public retrospective: Retrospective;
   public state = new State ({ vote: true });
@@ -30,7 +35,9 @@ export class VoteItemComponent implements OnInit {
     private retrospectiveService: RetrospectiveService,
     private activatedRoute: ActivatedRoute,
     private itemService: ItemService,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
+    public dialog: MdDialog
   ) { }
 
   ngOnInit() {
@@ -83,5 +90,16 @@ export class VoteItemComponent implements OnInit {
           this.router.navigate([`retrospective/${this.retrospective._id}/${retrospective.currentStep}`]);
         }
       });
+  }
+
+  openDialogForSendMessage () {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        type: 'broadcastMessage',
+        retrospective: this.retrospective._id,
+        service: this.retrospectiveService
+      }
+    });
   }
 }

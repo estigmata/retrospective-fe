@@ -4,7 +4,7 @@ export class RetrospectiveReport {
   _id?: String;
   summary?: String;
   retrospectiveId?: String;
-  itemId?: Item[];
+  itemId?: Item;
 
   constructor(params: RetrospectiveReport) {
     Object.assign(this, params);

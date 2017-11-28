@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 import { UserService } from './shared/services/user.service';
+import { TeamService } from './shared/services/team.service';
+import { Team } from './shared/models/team.model';
+import { User } from './shared/models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +14,19 @@ import { UserService } from './shared/services/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  sessionIsActive: boolean = this.userService.checkSession();
+  userIsModerator: boolean = this.userService.checkRole('moderator');
+  teamList: Team[];
+  currentTeam: string;
+  currentUser: User;
 
   constructor(
     private translate: TranslateService,
     private router: Router,
-    private userService: UserService
+    private route: ActivatedRoute,
+    private location: Location,
+    private userService: UserService,
+    private teamService: TeamService
   ) {
     this.translate.addLangs(['es', 'en']);
     this.translate.setDefaultLang('es');
@@ -22,19 +35,37 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.generateSessionId();
+    this.teamService.getAllByUserId(localStorage.getItem('userId'))
+    .subscribe(teamsByUser => {
+      this.teamList = teamsByUser;
+    });
+
+    this.userService.userCreated$
+    .switchMap(userLogged => {
+      if (userLogged) {
+        this.sessionIsActive = true;
+        this.currentUser = userLogged;
+        this.currentTeam = userLogged.team;
+        this.userIsModerator = this.currentUser.role === 'moderator';
+      }
+      return this.teamService.getAllByUserId(this.currentUser._id);
+    })
+    .subscribe(teamsByUser => {
+      this.teamList = teamsByUser;
+    });
+
+    this.teamService.newTeam$
+    .subscribe(createdTeam => {
+      this.currentTeam = createdTeam._id;
+      this.teamList.push(createdTeam);
+    });
   }
 
   switchLanguage (language: string) {
     this.translate.use(language);
   }
 
-  redirectToCreateRetrospective() {
-    this.router.navigate([ 'team/create-retrospective' ]);
+  changeCurrentTeam (newCurrentTeam: Team) {
+    this.currentTeam = newCurrentTeam._id;
   }
-
-  private generateSessionId() {
-    this.userService.createUser();
-  }
-
 }

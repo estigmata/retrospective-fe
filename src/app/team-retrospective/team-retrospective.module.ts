@@ -19,6 +19,8 @@ import { TeamRetrospectiveRoutingModule } from './team-retrospective-routing.mod
 import { RetrospectiveListComponent } from './retrospective-list/retrospective-list.component';
 import { RetrospectiveService } from './services/retrospective.service';
 import { StrategyService } from './services/strategy.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { CreateTeamComponent } from './create-team/create-team.component';
 
 @NgModule({
   imports: [
@@ -39,11 +41,13 @@ import { StrategyService } from './services/strategy.service';
   declarations: [
     TeamRetrospectiveComponent,
     RetrospectiveListComponent,
-    CreateRetrospectiveComponent
+    CreateRetrospectiveComponent,
+    CreateTeamComponent
   ],
   providers: [
     RetrospectiveService,
-    StrategyService
+    StrategyService,
+    AuthGuard
   ],
   bootstrap: [ TeamRetrospectiveComponent ]
 })

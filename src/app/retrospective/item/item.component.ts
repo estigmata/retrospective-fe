@@ -1,7 +1,6 @@
 import { Component, AfterViewInit, OnInit, Input, Output, ViewChild, EventEmitter, Inject, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MdFormFieldModule, MdDialog } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
 
 import { Item } from '../models/item.model';
 import { User } from './../../shared/models/user.model';
@@ -16,16 +15,17 @@ export class ItemComponent implements OnInit {
   @Input() item: Item;
   @Output() modified = new EventEmitter<Item>();
   @Output() deleted = new EventEmitter<void>();
+  @Output() ungroup = new EventEmitter<void>();
   @Output() vote = new EventEmitter<boolean>();
   @Input() state;
+  @Input() currentUser;
+  public itemSummary;
 
   public editMode;
   public itemForm: FormGroup;
-  public currentUser: User;
 
   constructor(
     private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
     public dialog: MdDialog) {
     this.itemForm = this.formBuilder.group({
       'summary': [null, Validators.required]
@@ -33,9 +33,7 @@ export class ItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.parent.data
-      .subscribe(data => this.currentUser = data.userData);
-    this.editMode = !this.item.summary && this.item.user === this.currentUser._id;
+    this.editMode = !this.item.summary && this.item.user._id === this.currentUser._id;
   }
 
   save(newItemValue) {
@@ -45,24 +43,30 @@ export class ItemComponent implements OnInit {
   }
 
   cancel() {
-    this.editMode = false;
-    if (!this.item._id) {
+    if (!this.itemSummary) {
       this.deleted.emit();
+    } else {
+      this.item.summary = this.itemSummary;
+      this.modified.emit(this.item);
+      this.editMode = false;
     }
   }
 
   openDialog () {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '300px',
-      data: { title: this.item.summary, delete: this.deleted }
+      data: { title: this.item.summary, delete: this.deleted, type: 'delete' }
     });
   }
 
   openEditMode () {
+    this.itemSummary = this.item.summary;
     this.editMode = true;
     this.itemForm = this.formBuilder.group({
-      'summary': [this.item.summary, Validators.required]
+      'summary': [this.itemSummary, Validators.required]
     });
+    this.item.summary = '';
+    this.modified.emit(this.item);
   }
 
   addRate() {
@@ -75,4 +79,10 @@ export class ItemComponent implements OnInit {
     }
   }
 
+  openUngroupDialog () {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: { title: this.item.summary, delete: this.ungroup, type: 'ungroup' }
+    });
+  }
 }

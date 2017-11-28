@@ -1,23 +1,23 @@
 <div fxFlex="60" class="container report">
-  <md-toolbar color="primary">
-    <h2 class="md-headline">{{ 'REPORT.TITLE' | translate  }}</h2>
-  </md-toolbar>
+    <md-toolbar color="primary">
+      <h2 class="md-headline">{{ 'REPORT.TITLE' | translate  }}</h2>
+    </md-toolbar>
 
-  <div class="actionItem" *ngFor="let actionItem of retrospectiveReport">
-    <md-card class="category">
-      <md-card-content>
-        <md-card fxFlex="80">
-          <md-card-content>
+    <div class="actionItem" *ngFor="let actionItem of retrospectiveReport">
+      <md-card class="category">
+        <md-card-title>
+          <div class="action-item-summary">
             {{actionItem.summary}}
-          </md-card-content>
-        </md-card>
-        <div class="item">
-          <app-item
-            [item]="actionItem.itemId"
-            [state]="state">
-          </app-item>
-        </div>
-      </md-card-content>
-    </md-card>
+          </div>
+        </md-card-title>
+        <md-card-content>
+          <div class="item">
+            <app-item
+              [item]="actionItem.itemId"
+              [state]="state">
+            </app-item>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
   </div>
-</div>

@@ -2,6 +2,10 @@
   width: 100%;
 }
 
+.item-margin {
+  margin-top: 10px;
+}
+
 .like-icon {
   padding-top: 10px;
 }
@@ -14,3 +18,36 @@
   background: #0277bd;
   color: white;
 }
+
+.user-color {
+  min-height: 5px;
+}
+
+.isTypingAnimation {
+  font-weight:bold;
+  animation: jump 1.5s ease 0s infinite normal ;
+ }
+ 
+@keyframes jump {
+  0%{
+  transform: translateY(0);
+  }
+  20%{
+  transform: translateY(0);
+  }
+  40%{
+  transform: translateY(-10px);
+  }
+  50%{
+  transform: translateY(0);
+  }
+  60%{
+  transform: translateY(-3px);
+  }
+  80%{
+  transform: translateY(0);
+  }
+  100%{
+  transform: translateY(0);
+  }
+ }

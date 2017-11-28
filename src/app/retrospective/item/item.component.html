@@ -6,6 +6,7 @@
             <md-card-content>
               <md-form-field class="full-width" >
                 <textarea
+                  appSummaryFocus
                   mdInput
                   placeholder="{{ 'ITEM.TEXTAREA-PLACEHOLDER' | translate }}"
                   formControlName="summary"
@@ -15,7 +16,7 @@
               </md-form-field>
             </md-card-content>
             <md-card-actions align="end">
-              <button md-raised-button class="cancelButton" (click)="cancel()">
+              <button md-raised-button type="button" class="cancelButton" (click)="cancel()">
                 <span>{{ "BUTTONS.CANCEL" | translate }}</span>
               </button>
               <button md-raised-button type="submit" color="accent" [disabled]="!itemForm.valid">
@@ -33,28 +34,25 @@
         </form>
       </div>
       <div *ngIf="!editMode">
-        <md-card>
+        <md-card [ngStyle]="{'border-bottom': '4px solid', 'border-bottom-color': 'hsl('+item.color.h+','+item.color.s+'%,'+item.color.l+'%)'}">
           <div fxLayout="row" fxLayoutAlign="start">
-            <md-card-header *ngIf="state.addAction">
-              <md-card-title>
-                <h2>{{ "ITEM.CATEGORY" | translate }} {{item.category.name}}</h2>
-                <h4>{{ "ITEM.VOTES" | translate }} {{item.totalVotes}}</h4>
-              </md-card-title>
-            </md-card-header>
-            <md-card-content fxFlex="95" *ngIf="!item.summary; else hasSummary">
-              Is typing...
-            </md-card-content>
+            <md-card-content class="isTypingAnimation" fxFlex="95" *ngIf="!item.summary; else hasSummary">
+              {{item.user.name}} {{ "ITEM.IS-TYPING" | translate }}
+            </md-card-content>            
             <ng-template #hasSummary>
-              <md-card-content fxFlex="95">
+              <md-card-content fxFlex="95" class="adjust-text" >
                 {{item.summary}}
               </md-card-content>
             </ng-template>
             <div fxFlex></div>
-            <div fxFlex align="end" *ngIf="state.group && item.children.length">
-              <md-icon [mdMenuTriggerFor]="groupMenu">more_vert</md-icon>
+            <div fxFlex align="end" *ngIf="state.group && item.children.length && currentUser.role === 'moderator'">
+              <md-icon *ngIf="item.user._id === currentUser._id" [mdMenuTriggerFor]="groupMenu">more_vert</md-icon>
               <md-menu class="menu-icon" #groupMenu="mdMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+                <a md-icon-button class="item-menu-icon " (click)="openUngroupDialog()" >       
+                  <md-icon class="md-18 circular-btn-with-icon">reply_all</md-icon>        
+                </a>
                 <a md-icon-button class="item-menu-icon" (click)="openEditMode()" >       
-                  <md-icon class="md-18">edit</md-icon>        
+                  <md-icon class="md-18 circular-btn-with-icon">edit</md-icon>        
                 </a>
               </md-menu>
             </div>
@@ -70,27 +68,45 @@
                 <md-icon class="md-18">plus_one</md-icon>
               </a>
             </div>
-            <div  fxFlex *ngIf="state.edit">
-              <md-icon [mdMenuTriggerFor]="itemMenu">more_vert</md-icon>
+            <div fxFlex *ngIf="state.edit">
+              <md-icon *ngIf="item.user._id === currentUser._id" [mdMenuTriggerFor]="itemMenu">more_vert</md-icon>
               <md-menu class="menu-icon" #itemMenu="mdMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
                 <a md-icon-button class="item-menu-icon" (click)="openEditMode()" >
-                  <md-icon class="md-18">edit</md-icon>
+                  <md-icon class="md-18 circular-btn-with-icon">edit</md-icon>
                 </a>
                 <a md-icon-button class="item-menu-icon" (click)="openDialog()" >
-                  <md-icon class="md-18">delete</md-icon>
+                  <md-icon class="md-18 circular-btn-with-icon">delete</md-icon>
                 </a>
               </md-menu>
             </div>
           </div>
-          <div *ngFor="let child of item.children" class="container">
+          <div 
+            *ngFor="let child of item.children; let i = index"
+            class="container"
+            dnd-draggable
+            [dragEnabled]="!!currentUser && currentUser.role === 'moderator'"
+            [dragData]="{item: child, index: i, belong: item}"
+            [dropZones]="['item', 'category']">
             <md-card>
-                <md-card-content>
+                <md-card-content class="adjust-text">
                   {{child.summary}}
                 </md-card-content>
               <div class="tag" *ngIf="child.category._id != item.category._id">
                 {{child.category.name}}
               </div>
           </md-card>
+        </div>
+        <div class="action-item-content" fxLayout="row" *ngIf="state.addAction">
+          <div fxFlex="50">
+            <span class="action-item-category-tag">
+              <span class="title-tag">{{ "ITEM.CATEGORY" | translate }}</span> {{item.category.name}}
+            </span>
+          </div>
+          <div fxFlex>
+            <span class="action-item-vote-tag">
+              <span class="title-tag">{{ "ITEM.VOTES" | translate }}</span> {{item.totalVotes}}
+            </span>
+          </div>
         </div>
       </md-card>
     </div>

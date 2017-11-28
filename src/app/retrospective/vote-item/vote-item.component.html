@@ -1,7 +1,13 @@
-<h1>{{ 'VOTE-COMPONENT.VOTES-LABEL' | translate }}: {{maxRateControl}}</h1>
-<button md-icon-button color="accent" (click)="nextStep()" [disabled]="maxRateControl > 0">
-  <md-icon class="md-48">play_circle_filled</md-icon>
-</button>
+<h1>
+  {{ 'VOTE-COMPONENT.VOTES-LABEL' | translate }}: {{maxRateControl}}
+  <button md-icon-button color="accent" (click)="nextStep()" [disabled]="maxRateControl > 0" *ngIf="userIsModerator">
+    <md-icon class="md-48">play_circle_filled</md-icon>
+  </button>
+</h1>
+
+<a md-icon-button class="item-menu-icon" (click)="openDialogForSendMessage()" *ngIf="userIsModerator">
+  <md-icon class="md-18 circular-btn-with-icon">markunread</md-icon>
+</a>
 
 <div fxLayout.xs="column" >
   <div fxLayout="row" *ngIf="retrospective">

@@ -7,8 +7,13 @@ import {
   MdButtonModule,
   MdDialogModule,
   MdToolbarModule,
-  MdMenuModule
+  MdMenuModule,
+  MdProgressBarModule,
+  MdTooltip,
+  MdTooltipModule,
+  MdSliderModule
 } from '@angular/material';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -34,7 +39,8 @@ import { ActionItemService } from './services/action-item.service';
 import { GroupItemComponent } from './group-item/group-item.component';
 import { ReportComponent } from './report/report.component';
 import { environment } from './../../environments/environment';
-import { UserResolverService } from './resolvers/user/user-resolver.service';
+import { SummaryDirective } from './item/item.directive';
+import { AuthGuard } from './services/auth-guard.service';
 
 const config: SocketIoConfig = { url: environment.backendPath, options: {} };
 
@@ -49,7 +55,8 @@ const config: SocketIoConfig = { url: environment.backendPath, options: {} };
     AddActionItemComponent,
     ActionItemComponent,
     GroupItemComponent,
-    ReportComponent
+    ReportComponent,
+    SummaryDirective
   ],
   imports: [
     RetrospectiveRoutingModule,
@@ -60,6 +67,9 @@ const config: SocketIoConfig = { url: environment.backendPath, options: {} };
     MdInputModule,
     MdButtonModule,
     MdMenuModule,
+    MdProgressBarModule,
+    MdTooltipModule,
+    MdSliderModule,
     CommonModule,
     RouterModule,
     HttpClientModule,
@@ -76,7 +86,7 @@ const config: SocketIoConfig = { url: environment.backendPath, options: {} };
     RetrospectiveResolverService,
     ItemResolverService,
     ActionItemService,
-    UserResolverService
+    AuthGuard
   ],
   exports: [
     RetrospectiveComponent,

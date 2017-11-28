@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -33,15 +33,27 @@ export class RetrospectiveService {
       );
   }
 
-  getNewRetrospectiveName(): Observable<Retrospective> {
-    return this.http.get<Retrospective>(`${environment.backendPath}retrospectives/next/retrospectiveName`)
+  getTeamRetrospectivesList(teamId: string): Observable<Retrospective[]> {
+    const params = new HttpParams().set('team', teamId);
+    return this.http.get<RetrospectiveListWrapper>(`${environment.backendPath}retrospectives/`, { params: params })
+      .map(
+        (wrapper: RetrospectiveListWrapper) => {
+          return wrapper.data;
+        }
+      );
+  }
+
+  getNewRetrospectiveName(teamId: string): Observable<Retrospective> {
+    const headers = new HttpHeaders().set('token', localStorage.getItem('token'));
+    return this.http.get<Retrospective>(`${environment.backendPath}retrospectives/${teamId}/next/retrospectiveName`, {headers: headers})
       .map(retrospective => {
         return retrospective;
       });
   }
 
   saveRetrospective(newRetrospective: Retrospective): Observable<Retrospective> {
-    return this.http.post<RetrospectiveWrapper>(`${environment.backendPath}retrospectives`, newRetrospective)
+    const headers = new HttpHeaders().set('token', localStorage.getItem('token'));
+    return this.http.post<RetrospectiveWrapper>(`${environment.backendPath}retrospectives`, newRetrospective, {headers: headers})
       .map(
         (retrospective: RetrospectiveWrapper) => {
           return retrospective.data;

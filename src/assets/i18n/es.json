@@ -14,16 +14,22 @@
     "TEXTAREA-PLACEHOLDER": "Escribe tu comentario",
     "GROUP-ITEM": "Grupo sin nombre",
     "CATEGORY": "Categoria:",
-    "VOTES": "Votos"
+    "VOTES": "Votos",
+    "IS-TYPING": "esta escribiendo..."
   },
   "ACTION-ITEM" :
   {
     "TITLE": "Acciones",
-    "TEXTAREA-PLACEHOLDER": "Escribe los elementos de accion"
+    "TEXTAREA-PLACEHOLDER": "Escribe los elementos de accion",
+    "SUMMARY": "Sin item de acion..."
   },
   "DELETE" :
   {
-    "MESSAGE" : "Deseas eliminar el elemento"
+    "MESSAGE" : "Deseas eliminar"
+  },
+  "UNGROUP" :
+  {
+    "MESSAGE" : "¿Quieres desagrupar"
   },
   "VOTE-COMPONENT":
   {
@@ -47,10 +53,36 @@
   "BUTTONS":
   {
     "ACCEPT": "Aceptar",
-    "CANCEL": "Cancelar"
+    "CANCEL": "Cancelar",
+    "SEND": "Enviar"
   },
   "REPORT":
   {
     "TITLE": "Reporte de Retrospectiva"
+  },
+  "CREATE-TEAM":
+  {
+    "BUTTON-LABEL": "Equipos",
+    "LAUNCH-LABEL": "Crear nuevo Equipo",
+    "TEAM-NAME": "Nombre del Equipo"
+  },
+  "LOGIN":
+  {
+    "TITTLE": "Ingresa con tu cuenta",
+    "NAME-LABEL": "Ingresa tu nombre",
+    "PASSWORD-LABEL": "Ingresa tu password"
+  },
+  "SIGN-UP":
+  {
+    "TITTLE": "Crea una nueva cuenta",
+    "NAME-LABEL": "Ingresa tu nombre",
+    "PASSWORD-LABEL": "Ingresa tu password",
+    "RE-PASSWORD-LABEL": "Confirma tu password"
+  },
+  "TEXT":
+  {
+    "SEND-MESSAGE": "Mensaje: Cambiará al siguiente paso en",
+    "TIME": "minutos",
+    "WARNING-MESSAGE": "Mensaje de alerta"
   }
 }

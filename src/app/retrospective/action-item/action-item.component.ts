@@ -14,8 +14,11 @@ export class ActionItemComponent implements OnInit, OnChanges {
   @Output() modified = new EventEmitter<ActionItem>();
   @Output() deleted = new EventEmitter<void>();
   @Input() actionItem;
+  @Input() currentUser;
+
   public editMode;
   public actionItemForm: FormGroup;
+
   constructor(private formBuilder: FormBuilder) {
     this.editMode = true;
     this.actionItemForm = this.formBuilder.group({

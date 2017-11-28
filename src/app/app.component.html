@@ -6,16 +6,33 @@
         <span class="sidenav-second-color">{{ 'APP-COMPONENT.TITTLE-CYAN' | translate }}</span>
       </a>
     </md-toolbar>
+    <span>
+      {{ 'CREATE-TEAM.BUTTON-LABEL' | translate }}
+      <button md-icon-button type="button" routerLink="team/create-team" *ngIf="userIsModerator">
+        <md-icon>add_circle</md-icon>
+      </button>
+    </span>
+    
+    <div *ngFor="let team of teamList">
+      <h3>
+        <a routerLink="team/retrospective-list/{{team._id}}" (click)="changeCurrentTeam(team)">
+          {{ team.name }}
+        </a>
+      </h3>
+    </div>
   </md-sidenav>
 
   <md-toolbar class="my-toolbar" color="primary">
-    <button type="button" md-icon-button (click)="sidenav.toggle()">
+    <button type="button" md-icon-button (click)="sidenav.toggle()" *ngIf="sessionIsActive">
       <md-icon>menu</md-icon>
     </button>
-    {{ 'CREATE-RETROSPECTIVE.BUTTON-LABEL' | translate }}
-    <button md-icon-button type="button" routerLink="team/create-retrospective">
-      <md-icon>add_circle</md-icon>
-    </button>
+
+    <div *ngIf="userIsModerator">
+      {{ 'CREATE-RETROSPECTIVE.BUTTON-LABEL' | translate }}
+      <button md-icon-button type="button" routerLink="team/create-retrospective/{{currentTeam}}" *ngIf="currentTeam">
+        <md-icon>add_circle</md-icon>
+      </button>
+    </div>
     <span class="space"></span>
     <button layout="row" layout-align="end-start" md-button [mdMenuTriggerFor]="languageMenu">
       <md-icon>language</md-icon>

@@ -9,15 +9,13 @@ import { AddActionItemComponent } from './add-action-item/add-action-item.compon
 import { ItemResolverService } from './resolvers/item/item-resolver.service';
 import { GroupItemComponent } from './group-item/group-item.component';
 import { ReportComponent } from './report/report.component';
-import { UserResolverService } from './resolvers/user/user-resolver.service';
+import { AuthGuard } from './services/auth-guard.service';
 
 const routes: Routes = [
   {
     path: '',
     component: RetrospectiveComponent,
-    resolve: {
-      userData: UserResolverService
-    },
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'add-items',
